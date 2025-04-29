@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DearSkin – Auth</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .auth-container {
+      max-width: 400px;
+      margin: 4rem auto;
+      padding: 2rem;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    .password-hint { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+    .text-center { text-align: center; }
+    .mt-3 { margin-top: 1rem; }
+    
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    
+    button {
+      padding: 0.75rem;
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      background-color: #D8A7B1;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #c78b99;
+    }
+  </style>
+</head>
+<body>
+  <div class="container auth-container">
+    <form id="login-form" style="display: none;">
+      <h2>Login</h2>
+      <input type="email" id="login-email" placeholder="Email" required /><br><br>
+      <input type="password" id="login-password" placeholder="Password" required /><br><br>
+      <button type="submit" class="btn btn-block btn-primary">Log In</button>
+      <p class="text-center mt-3">Don't have an account? <a href="auth.html?mode=signup">Sign Up</a></p>
+    </form>
+
+    <form id="signup-form" style="display: none;">
+      <h2>Sign Up</h2>
+      <input type="email" id="signup-email" placeholder="Email" required /><br><br>
+      <input type="password" id="signup-password" placeholder="Password" required /><br><br>
+      <input type="text" id="signup-name" placeholder="Your Name" required /><br><br>
+      <button type="submit" class="btn btn-block btn-primary">Sign Up</button>
+      <p class="text-center mt-3">Already have an account? <a href="auth.html?mode=login">Log In</a></p>
+    </form>
+
+    <div id="loading" class="text-center mt-3" style="display: none;">Loading...</div>
+  </div>
+
+  <script type="module">
+    import { supabase } from './supabase.js'
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const loginForm = document.getElementById('login-form')
+      const signupForm = document.getElementById('signup-form')
+      const loading = document.getElementById('loading')
+
+      loginForm.style.display = 'none'
+      signupForm.style.display = 'none'
+      loading.style.display = 'block'
+
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        window.location.href = 'dashboard.html'
+        return
+      }
+
+      const mode = new URLSearchParams(window.location.search).get('mode')
+      console.log('mode param is:', mode)
+
+      if (mode === 'signup') {
+        signupForm.style.display = 'block'
+      } else {
+        loginForm.style.display = 'block'
+      }
+
+      loading.style.display = 'none'
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loading.style.display = 'block';
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          alert("Login failed: " + error.message);
+          loginForm.style.display = 'block';
+        } else {
+          window.location.href = 'dashboard.html';
+        }
+        loading.style.display = 'none';
+      });
+
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loading.style.display = 'block';
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        const name = document.getElementById('signup-name').value;
+
+        if (password.length < 6) {
+          alert("Password must be at least 6 characters.");
+          signupForm.style.display = 'block';
+          loading.style.display = 'none';
+          return;
+        }
+
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { name } }
+        });
+
+        if (error) {
+          alert("Signup failed: " + error.message);
+          signupForm.style.display = 'block';
+        } else {
+          // Insert into profile table
+          if (data?.user?.id) {
+            await supabase.from('profiles').insert([{
+              id: data.user.id,
+              email,
+              name,
+              created_at: new Date().toISOString()
+            }]);
+          }
+          alert('Signup successful! Please log in.');
+          window.location.href = 'auth.html?mode=login';
+        }
+        loading.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
