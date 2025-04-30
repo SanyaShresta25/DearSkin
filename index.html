@@ -5,81 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DearSkin - Personalized Skincare Recommendations</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-
-
 <body>
-  <script type="module">
-    import { supabase } from './supabase.js'
-  
-    document.addEventListener('DOMContentLoaded', async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-  
-      if (user) {
-        // User is logged in - show personalized greeting and dashboard link
-        console.log("User is logged in:", user.email)
-        
-        // Update auth buttons to show dashboard link and logout
-        const authButtons = document.querySelector('.auth-buttons');
-        if (authButtons) {
-          authButtons.innerHTML = `
-            <button class="btn btn-ghost" onclick="window.location.href='dashboard.html'">My Profile</button>
-            <button class="btn btn-primary logout-btn">Logout</button>
-          `;
-          
-          // Add logout functionality
-          document.querySelector('.logout-btn').addEventListener('click', async () => {
-            await supabase.auth.signOut();
-            window.location.reload();
-          });
-        }
-        
-        // Update mobile auth buttons too
-        const mobileAuthButtons = document.querySelector('.mobile-auth-buttons');
-        if (mobileAuthButtons) {
-          mobileAuthButtons.innerHTML = `
-            <button class="btn btn-ghost" onclick="window.location.href='dashboard.html'">My Profile</button>
-            <button class="btn btn-primary mobile-logout-btn">Logout</button>
-          `;
-          
-          // Add logout functionality to mobile button
-          document.querySelector('.mobile-logout-btn').addEventListener('click', async () => {
-            await supabase.auth.signOut();
-            window.location.reload();
-          });
-        }
-      }
-    })
-  </script>
-  
-  
   <!-- Navbar -->
   <header class="navbar">
     <div class="container">
       <div class="navbar-content">
-        <a href="/" class="logo">DearSkin</a>
+        <a href="/" class="logo">
+          <span class="logo-icon">✿</span>
+          <span class="logo-text">DearSkin</span>
+        </a>
 
         <!-- Desktop Navigation -->
-        <nav class="desktop-nav">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/dashboard" class="nav-link">Dashboard</a>
-          <a href="/about" class="nav-link">About</a>
-          <a href="/contact" class="nav-link">Contact</a>
-        </nav>
+       <nav class="desktop-nav">
+  <a href="index.html" class="nav-link active">Home</a>
+  <a href="dashboard.html" class="nav-link">Dashboard</a>
+  <a href="products.html" class="nav-link">Products</a>
+  <a href="ingredients.html" class="nav-link">Ingredients</a>
+  <a href="widgets.html" class="nav-link">Widgets</a>
+</nav>
+
 
         <!-- Auth Buttons - Desktop -->
         <div class="auth-buttons">
-         <!-- Desktop buttons -->
-<button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
-<button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
-
+          <button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
+          <button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
         </div>
 
         <!-- Mobile Menu Button -->
-        <button class="mobile-menu-button" id="mobile-menu-button">
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu">
           <i data-lucide="menu"></i>
         </button>
       </div>
@@ -87,130 +43,289 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobile-menu">
-      <nav class="mobile-nav">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/dashboard" class="nav-link">Dashboard</a>
-        <a href="/about" class="nav-link">About</a>
-        <a href="/contact" class="nav-link">Contact</a>
-        <div class="mobile-auth-buttons">
-          <button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
-          <button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
-        </div>
-      </nav>
+     <nav class="mobile-nav">
+  <a href="index.html" class="nav-link active">Home</a>
+  <a href="dashboard.html" class="nav-link">Dashboard</a>
+  <a href="products.html" class="nav-link">Products</a>
+  <a href="ingredients.html" class="nav-link">Ingredients</a>
+  <a href="widgets.html" class="nav-link">Widgets</a>
+  <div class="mobile-auth-buttons">
+    <button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
+    <button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
+  </div>
+</nav>
+
     </div>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
-      <div class="hero-content">
-        <h1>A love letter to your skin</h1>
-        <p>Personalized skincare recommendations powered by AI</p>
-        <button class="btn btn-primary btn-lg">
-          Start My Skin Journey
-          <i data-lucide="arrow-right"></i>
-        </button>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="badge">AI-Powered Skincare</div>
+          <h1>A love letter to your <span class="highlight">skin</span></h1>
+          <p>Personalized skincare recommendations tailored to your unique skin profile, powered by advanced AI technology.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg">
+              Start My Skin Journey
+              <i data-lucide="arrow-right"></i>
+            </button>
+            <button class="btn btn-outline btn-lg">
+              <i data-lucide="play"></i>
+              Watch How It Works
+            </button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-value">10k+</span>
+              <span class="stat-label">Happy Users</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">98%</span>
+              <span class="stat-label">Satisfaction</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">500+</span>
+              <span class="stat-label">Products</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="hero-image-container">
+            <div class="hero-image-placeholder">
+              <div class="image-overlay"></div>
+              <div class="floating-product floating-product-1"></div>
+              <div class="floating-product floating-product-2"></div>
+              <div class="floating-product floating-product-3"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="hero-blob-1"></div>
-      <div class="hero-blob-2"></div>
+    </div>
+    <div class="hero-blob-1"></div>
+    <div class="hero-blob-2"></div>
+    <div class="hero-blob-3"></div>
+  </section>
+
+  <!-- Brands Section -->
+  <section class="brands">
+    <div class="container">
+      <p class="brands-title">Trusted by leading skincare brands</p>
+      <div class="brands-grid">
+        <div class="brand-logo">Brand 1</div>
+        <div class="brand-logo">Brand 2</div>
+        <div class="brand-logo">Brand 3</div>
+        <div class="brand-logo">Brand 4</div>
+        <div class="brand-logo">Brand 5</div>
+      </div>
     </div>
   </section>
 
   <!-- Onboarding Form Section -->
   <section class="onboarding">
     <div class="container">
-      <h2>Tell us about your skin</h2>
-      <div class="card">
+      <div class="section-header">
+        <h2>Tell us about your skin</h2>
+        <p class="section-description">Complete this quick assessment to get personalized recommendations</p>
+      </div>
+      <div class="card onboarding-card">
         <div class="card-content">
           <form class="onboarding-form">
+            <div class="form-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 25%"></div>
+              </div>
+              <span class="progress-text">Step 1 of 4</span>
+            </div>
+            
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Your name">
+                <div class="input-wrapper">
+                  <i data-lucide="user" class="input-icon"></i>
+                  <input type="text" id="name" placeholder="Your name">
+                </div>
               </div>
               <div class="form-group">
                 <label for="age">Age</label>
-                <input type="number" id="age" placeholder="Your age">
+                <div class="input-wrapper">
+                  <i data-lucide="calendar" class="input-icon"></i>
+                  <input type="number" id="age" placeholder="Your age">
+                </div>
               </div>
             </div>
 
             <div class="form-group">
               <label for="gender">Gender (Optional)</label>
-              <select id="gender">
-                <option value="" selected disabled>Select gender</option>
-                <option value="female">Female</option>
-                <option value="male">Male</option>
-                <option value="non-binary">Non-binary</option>
-                <option value="prefer-not-to-say">Prefer not to say</option>
-              </select>
+              <div class="input-wrapper">
+                <i data-lucide="users" class="input-icon"></i>
+                <select id="gender">
+                  <option value="" selected disabled>Select gender</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="non-binary">Non-binary</option>
+                  <option value="prefer-not-to-say">Prefer not to say</option>
+                </select>
+              </div>
             </div>
 
             <div class="form-group">
               <label>Skin Type</label>
-              <div class="radio-group">
+              <div class="radio-group fancy">
                 <div class="radio-item">
                   <input type="radio" id="skin-type-oily" name="skin-type" value="oily">
-                  <label for="skin-type-oily">Oily</label>
+                  <label for="skin-type-oily">
+                    <span class="radio-icon">💧</span>
+                    <span class="radio-text">Oily</span>
+                  </label>
                 </div>
                 <div class="radio-item">
                   <input type="radio" id="skin-type-dry" name="skin-type" value="dry">
-                  <label for="skin-type-dry">Dry</label>
+                  <label for="skin-type-dry">
+                    <span class="radio-icon">🍂</span>
+                    <span class="radio-text">Dry</span>
+                  </label>
                 </div>
                 <div class="radio-item">
                   <input type="radio" id="skin-type-combination" name="skin-type" value="combination" checked>
-                  <label for="skin-type-combination">Combination</label>
+                  <label for="skin-type-combination">
+                    <span class="radio-icon">☯️</span>
+                    <span class="radio-text">Combination</span>
+                  </label>
                 </div>
                 <div class="radio-item">
                   <input type="radio" id="skin-type-sensitive" name="skin-type" value="sensitive">
-                  <label for="skin-type-sensitive">Sensitive</label>
+                  <label for="skin-type-sensitive">
+                    <span class="radio-icon">✨</span>
+                    <span class="radio-text">Sensitive</span>
+                  </label>
                 </div>
                 <div class="radio-item">
                   <input type="radio" id="skin-type-normal" name="skin-type" value="normal">
-                  <label for="skin-type-normal">Normal</label>
+                  <label for="skin-type-normal">
+                    <span class="radio-icon">🌱</span>
+                    <span class="radio-text">Normal</span>
+                  </label>
                 </div>
               </div>
             </div>
 
             <div class="form-group">
               <label>Skin Concerns (Select all that apply)</label>
-              <div class="checkbox-group">
+              <div class="checkbox-group fancy">
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-acne" name="concerns" value="acne">
-                  <label for="concern-acne">Acne</label>
+                  <label for="concern-acne">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Acne</span>
+                  </label>
                 </div>
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-dullness" name="concerns" value="dullness">
-                  <label for="concern-dullness">Dullness</label>
+                  <label for="concern-dullness">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Dullness</span>
+                  </label>
                 </div>
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-pigmentation" name="concerns" value="pigmentation">
-                  <label for="concern-pigmentation">Pigmentation</label>
+                  <label for="concern-pigmentation">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Pigmentation</span>
+                  </label>
                 </div>
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-redness" name="concerns" value="redness">
-                  <label for="concern-redness">Redness</label>
+                  <label for="concern-redness">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Redness</span>
+                  </label>
                 </div>
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-dryness" name="concerns" value="dryness">
-                  <label for="concern-dryness">Dryness</label>
+                  <label for="concern-dryness">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Dryness</span>
+                  </label>
                 </div>
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-fine-lines" name="concerns" value="fine-lines">
-                  <label for="concern-fine-lines">Fine Lines</label>
+                  <label for="concern-fine-lines">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Fine Lines</span>
+                  </label>
                 </div>
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-texture" name="concerns" value="texture">
-                  <label for="concern-texture">Texture</label>
+                  <label for="concern-texture">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Texture</span>
+                  </label>
                 </div>
                 <div class="checkbox-item">
                   <input type="checkbox" id="concern-pores" name="concerns" value="pores">
-                  <label for="concern-pores">Pores</label>
+                  <label for="concern-pores">
+                    <span class="checkbox-icon"></span>
+                    <span class="checkbox-text">Pores</span>
+                  </label>
                 </div>
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Get My Recommendations</button>
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost">Back</button>
+              <button type="submit" class="btn btn-primary">Continue</button>
+            </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>How DearSkin Works</h2>
+        <p class="section-description">Our AI-powered platform creates a personalized skincare routine in just a few steps</p>
+      </div>
+      
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon">
+            <i data-lucide="clipboard-list"></i>
+          </div>
+          <h3>Complete Assessment</h3>
+          <p>Tell us about your skin type, concerns, and goals through our comprehensive assessment</p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>AI Analysis</h3>
+          <p>Our advanced AI analyzes your skin profile and matches it with effective ingredients</p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon">
+            <i data-lucide="flask-conical"></i>
+          </div>
+          <h3>Get Recommendations</h3>
+          <p>Receive personalized product and ingredient recommendations tailored to your needs</p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-icon">
+            <i data-lucide="calendar-check"></i>
+          </div>
+          <h3>Build Your Routine</h3>
+          <p>Create your perfect morning and evening skincare routine with our guided approach</p>
         </div>
       </div>
     </div>
@@ -219,17 +334,25 @@
   <!-- Ingredient Recommendation Section -->
   <section class="ingredients">
     <div class="container">
-      <h2>Top Recommended Ingredients for You</h2>
-      <p class="section-description">Based on your skin profile, these ingredients will help address your concerns</p>
+      <div class="section-header">
+        <h2>Top Recommended Ingredients for You</h2>
+        <p class="section-description">Based on your skin profile, these ingredients will help address your concerns</p>
+      </div>
 
       <div class="ingredient-grid">
         <div class="ingredient-card">
           <div class="ingredient-header">
+            <div class="ingredient-icon">N</div>
             <h3>Niacinamide</h3>
           </div>
           <div class="ingredient-content">
             <p>Reduces inflammation, minimizes pores, and regulates oil production</p>
-            <button class="btn btn-outline">
+            <div class="ingredient-benefits">
+              <span class="benefit">Anti-inflammatory</span>
+              <span class="benefit">Pore-reducing</span>
+              <span class="benefit">Oil-control</span>
+            </div>
+            <button class="btn btn-outline btn-block">
               View Matching Products
               <i data-lucide="chevron-right"></i>
             </button>
@@ -238,11 +361,17 @@
 
         <div class="ingredient-card">
           <div class="ingredient-header">
+            <div class="ingredient-icon">HA</div>
             <h3>Hyaluronic Acid</h3>
           </div>
           <div class="ingredient-content">
             <p>Deeply hydrates and plumps skin by attracting and retaining moisture</p>
-            <button class="btn btn-outline">
+            <div class="ingredient-benefits">
+              <span class="benefit">Hydrating</span>
+              <span class="benefit">Plumping</span>
+              <span class="benefit">Anti-aging</span>
+            </div>
+            <button class="btn btn-outline btn-block">
               View Matching Products
               <i data-lucide="chevron-right"></i>
             </button>
@@ -251,11 +380,17 @@
 
         <div class="ingredient-card">
           <div class="ingredient-header">
+            <div class="ingredient-icon">C</div>
             <h3>Vitamin C</h3>
           </div>
           <div class="ingredient-content">
             <p>Brightens skin tone, reduces hyperpigmentation, and boosts collagen</p>
-            <button class="btn btn-outline">
+            <div class="ingredient-benefits">
+              <span class="benefit">Brightening</span>
+              <span class="benefit">Anti-oxidant</span>
+              <span class="benefit">Collagen-boosting</span>
+            </div>
+            <button class="btn btn-outline btn-block">
               View Matching Products
               <i data-lucide="chevron-right"></i>
             </button>
@@ -264,11 +399,17 @@
 
         <div class="ingredient-card">
           <div class="ingredient-header">
+            <div class="ingredient-icon">R</div>
             <h3>Retinol</h3>
           </div>
           <div class="ingredient-content">
             <p>Accelerates cell turnover, reduces fine lines, and improves texture</p>
-            <button class="btn btn-outline">
+            <div class="ingredient-benefits">
+              <span class="benefit">Anti-aging</span>
+              <span class="benefit">Exfoliating</span>
+              <span class="benefit">Texture-improving</span>
+            </div>
+            <button class="btn btn-outline btn-block">
               View Matching Products
               <i data-lucide="chevron-right"></i>
             </button>
@@ -277,11 +418,17 @@
 
         <div class="ingredient-card">
           <div class="ingredient-header">
+            <div class="ingredient-icon">P</div>
             <h3>Peptides</h3>
           </div>
           <div class="ingredient-content">
             <p>Strengthens skin barrier and promotes collagen production</p>
-            <button class="btn btn-outline">
+            <div class="ingredient-benefits">
+              <span class="benefit">Strengthening</span>
+              <span class="benefit">Firming</span>
+              <span class="benefit">Repairing</span>
+            </div>
+            <button class="btn btn-outline btn-block">
               View Matching Products
               <i data-lucide="chevron-right"></i>
             </button>
@@ -290,11 +437,17 @@
 
         <div class="ingredient-card">
           <div class="ingredient-header">
+            <div class="ingredient-icon">Ce</div>
             <h3>Ceramides</h3>
           </div>
           <div class="ingredient-content">
             <p>Restores skin barrier function and locks in moisture</p>
-            <button class="btn btn-outline">
+            <div class="ingredient-benefits">
+              <span class="benefit">Barrier-repair</span>
+              <span class="benefit">Moisturizing</span>
+              <span class="benefit">Protective</span>
+            </div>
+            <button class="btn btn-outline btn-block">
               View Matching Products
               <i data-lucide="chevron-right"></i>
             </button>
@@ -307,16 +460,36 @@
   <!-- Product Suggestion Section -->
   <section class="products">
     <div class="container">
-      <h2>Curated Products Based on Your Skin</h2>
-      <p class="section-description">Personalized recommendations that match your unique skin profile</p>
+      <div class="section-header">
+        <h2>Curated Products Based on Your Skin</h2>
+        <p class="section-description">Personalized recommendations that match your unique skin profile</p>
+      </div>
+
+      <div class="product-filters">
+        <button class="filter-btn active">All Products</button>
+        <button class="filter-btn">Cleansers</button>
+        <button class="filter-btn">Serums</button>
+        <button class="filter-btn">Moisturizers</button>
+        <button class="filter-btn">Treatments</button>
+      </div>
 
       <div class="product-grid">
         <!-- Product 1 -->
         <div class="product-card">
+          <div class="product-badge">Best Seller</div>
           <div class="product-image">
             <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
           </div>
           <div class="product-content">
+            <div class="product-brand">Brand Name</div>
             <div class="product-header">
               <h3>Hydrating Serum</h3>
               <span class="product-price">$38</span>
@@ -327,20 +500,21 @@
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
-                <i data-lucide="star" class="star-half"></i>
+                <i data-lucide="star-half" class="star-half"></i>
               </div>
-              <span>4.8</span>
+              <span>4.8 (120 reviews)</span>
             </div>
             <div class="product-tags">
               <span class="tag">Vegan</span>
               <span class="tag">Cruelty-Free</span>
             </div>
-            <div class="product-actions">
-              <button class="btn btn-outline btn-icon">
-                <i data-lucide="heart"></i> Save
-              </button>
-              <button class="btn btn-primary">Add to Routine</button>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">98% match for your skin</span>
             </div>
+            <button class="btn btn-primary btn-block">Add to Routine</button>
           </div>
         </div>
 
@@ -348,8 +522,17 @@
         <div class="product-card">
           <div class="product-image">
             <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
           </div>
           <div class="product-content">
+            <div class="product-brand">Brand Name</div>
             <div class="product-header">
               <h3>Gentle Cleanser</h3>
               <span class="product-price">$24</span>
@@ -360,29 +543,40 @@
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
-                <i data-lucide="star" class="star-half"></i>
+                <i data-lucide="star-half" class="star-half"></i>
               </div>
-              <span>4.6</span>
+              <span>4.6 (98 reviews)</span>
             </div>
             <div class="product-tags">
               <span class="tag">Fragrance-Free</span>
               <span class="tag">Sensitive Skin</span>
             </div>
-            <div class="product-actions">
-              <button class="btn btn-outline btn-icon">
-                <i data-lucide="heart"></i> Save
-              </button>
-              <button class="btn btn-primary">Add to Routine</button>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">95% match for your skin</span>
             </div>
+            <button class="btn btn-primary btn-block">Add to Routine</button>
           </div>
         </div>
 
         <!-- Product 3 -->
         <div class="product-card">
+          <div class="product-badge">New</div>
           <div class="product-image">
             <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
           </div>
           <div class="product-content">
+            <div class="product-brand">Brand Name</div>
             <div class="product-header">
               <h3>Brightening Moisturizer</h3>
               <span class="product-price">$45</span>
@@ -395,18 +589,19 @@
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
               </div>
-              <span>4.9</span>
+              <span>4.9 (156 reviews)</span>
             </div>
             <div class="product-tags">
               <span class="tag">Anti-Aging</span>
               <span class="tag">Hydrating</span>
             </div>
-            <div class="product-actions">
-              <button class="btn btn-outline btn-icon">
-                <i data-lucide="heart"></i> Save
-              </button>
-              <button class="btn btn-primary">Add to Routine</button>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">99% match for your skin</span>
             </div>
+            <button class="btn btn-primary btn-block">Add to Routine</button>
           </div>
         </div>
 
@@ -414,8 +609,17 @@
         <div class="product-card">
           <div class="product-image">
             <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
           </div>
           <div class="product-content">
+            <div class="product-brand">Brand Name</div>
             <div class="product-header">
               <h3>Exfoliating Toner</h3>
               <span class="product-price">$32</span>
@@ -426,20 +630,21 @@
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
-                <i data-lucide="star" class="star-half"></i>
+                <i data-lucide="star-half" class="star-half"></i>
               </div>
-              <span>4.7</span>
+              <span>4.7 (84 reviews)</span>
             </div>
             <div class="product-tags">
               <span class="tag">Alcohol-Free</span>
               <span class="tag">Pore-Refining</span>
             </div>
-            <div class="product-actions">
-              <button class="btn btn-outline btn-icon">
-                <i data-lucide="heart"></i> Save
-              </button>
-              <button class="btn btn-primary">Add to Routine</button>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">92% match for your skin</span>
             </div>
+            <button class="btn btn-primary btn-block">Add to Routine</button>
           </div>
         </div>
 
@@ -447,8 +652,17 @@
         <div class="product-card">
           <div class="product-image">
             <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
           </div>
           <div class="product-content">
+            <div class="product-brand">Brand Name</div>
             <div class="product-header">
               <h3>Calming Face Mask</h3>
               <span class="product-price">$28</span>
@@ -459,29 +673,40 @@
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
-                <i data-lucide="star" class="star-half"></i>
+                <i data-lucide="star-half" class="star-half"></i>
               </div>
-              <span>4.5</span>
+              <span>4.5 (76 reviews)</span>
             </div>
             <div class="product-tags">
               <span class="tag">Soothing</span>
               <span class="tag">Redness-Relief</span>
             </div>
-            <div class="product-actions">
-              <button class="btn btn-outline btn-icon">
-                <i data-lucide="heart"></i> Save
-              </button>
-              <button class="btn btn-primary">Add to Routine</button>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">90% match for your skin</span>
             </div>
+            <button class="btn btn-primary btn-block">Add to Routine</button>
           </div>
         </div>
 
         <!-- Product 6 -->
         <div class="product-card">
+          <div class="product-badge">Best Value</div>
           <div class="product-image">
             <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
           </div>
           <div class="product-content">
+            <div class="product-brand">Brand Name</div>
             <div class="product-header">
               <h3>Vitamin C Serum</h3>
               <span class="product-price">$52</span>
@@ -494,19 +719,114 @@
                 <i data-lucide="star" class="star-filled"></i>
                 <i data-lucide="star" class="star-filled"></i>
               </div>
-              <span>4.9</span>
+              <span>4.9 (142 reviews)</span>
             </div>
             <div class="product-tags">
               <span class="tag">Brightening</span>
               <span class="tag">Anti-Oxidant</span>
             </div>
-            <div class="product-actions">
-              <button class="btn btn-outline btn-icon">
-                <i data-lucide="heart"></i> Save
-              </button>
-              <button class="btn btn-primary">Add to Routine</button>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">97% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block">Add to Routine</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="view-more">
+        <button class="btn btn-outline btn-lg">
+          View All Products
+          <i data-lucide="arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <h2>What Our Users Say</h2>
+        <p class="section-description">Real results from real people using DearSkin</p>
+      </div>
+
+      <div class="testimonial-slider" id="testimonial-slider">
+        <div class="testimonial-track">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <div class="avatar-placeholder">JD</div>
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-rating">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+              </div>
+              <p class="testimonial-text">"DearSkin completely transformed my skincare routine. After years of trying random products, I finally have a routine that works for my combination skin!"</p>
+              <div class="testimonial-author">
+                <span class="author-name">Jessica D.</span>
+                <span class="author-info">32, Combination Skin</span>
+              </div>
             </div>
           </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <div class="avatar-placeholder">MT</div>
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-rating">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+              </div>
+              <p class="testimonial-text">"I was skeptical about an AI recommending skincare, but the results speak for themselves. My acne has cleared up and my skin looks better than ever!"</p>
+              <div class="testimonial-author">
+                <span class="author-name">Michael T.</span>
+                <span class="author-info">28, Oily Skin</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <div class="avatar-placeholder">SL</div>
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-rating">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star-half" class="star-half"></i>
+              </div>
+              <p class="testimonial-text">"As someone with sensitive skin, I've always been afraid to try new products. DearSkin recommended gentle options that didn't irritate my skin at all. I'm impressed!"</p>
+              <div class="testimonial-author">
+                <span class="author-name">Sarah L.</span>
+                <span class="author-info">35, Sensitive Skin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-controls">
+          <button class="testimonial-control prev" id="testimonial-prev">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <div class="testimonial-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <button class="testimonial-control next" id="testimonial-next">
+            <i data-lucide="chevron-right"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -515,82 +835,154 @@
   <!-- User Dashboard Section -->
   <section class="dashboard">
     <div class="container">
-      <h2>Your Skincare Dashboard</h2>
-      <p class="section-description">Track your routine, saved products, and skin progress all in one place</p>
+      <div class="section-header">
+        <h2>Your Skincare Dashboard</h2>
+        <p class="section-description">Track your routine, saved products, and skin progress all in one place</p>
+      </div>
 
       <div class="card dashboard-card">
         <div class="tabs">
           <div class="tabs-list">
-            <button class="tab-button active" data-tab="routine">Routine Planner</button>
-            <button class="tab-button" data-tab="saved">Saved Products</button>
-            <button class="tab-button" data-tab="results">Skin Quiz Results</button>
+            <button class="tab-button active" data-tab="routine">
+              <i data-lucide="calendar-clock"></i>
+              Routine Planner
+            </button>
+            <button class="tab-button" data-tab="saved">
+              <i data-lucide="heart"></i>
+              Saved Products
+            </button>
+            <button class="tab-button" data-tab="results">
+              <i data-lucide="bar-chart-2"></i>
+              Skin Quiz Results
+            </button>
           </div>
 
           <div class="tab-content active" id="routine-tab">
             <div class="routine-grid">
               <div class="routine-column">
-                <h3>Morning Routine</h3>
+                <div class="routine-header">
+                  <i data-lucide="sun"></i>
+                  <h3>Morning Routine</h3>
+                </div>
                 <div class="routine-steps">
                   <div class="routine-step">
                     <div class="step-number">1</div>
-                    <span>Cleanser</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Cleanser</span>
+                      <span class="step-desc">Gentle cleansing to remove overnight buildup</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">2</div>
-                    <span>Toner</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Toner</span>
+                      <span class="step-desc">Balance pH and prep skin for treatments</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">3</div>
-                    <span>Serum</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Serum</span>
+                      <span class="step-desc">Targeted treatment for your concerns</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">4</div>
-                    <span>Moisturizer</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Moisturizer</span>
+                      <span class="step-desc">Hydrate and seal in previous products</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">5</div>
-                    <span>Sunscreen</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Sunscreen</span>
+                      <span class="step-desc">Essential protection from UV damage</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                 </div>
               </div>
 
               <div class="routine-column">
-                <h3>Evening Routine</h3>
+                <div class="routine-header">
+                  <i data-lucide="moon"></i>
+                  <h3>Evening Routine</h3>
+                </div>
                 <div class="routine-steps">
                   <div class="routine-step">
                     <div class="step-number">1</div>
-                    <span>Makeup Remover</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Makeup Remover</span>
+                      <span class="step-desc">Gently remove makeup and sunscreen</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">2</div>
-                    <span>Cleanser</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Cleanser</span>
+                      <span class="step-desc">Deep cleanse to remove daily impurities</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">3</div>
-                    <span>Exfoliant</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Exfoliant</span>
+                      <span class="step-desc">Remove dead skin cells (2-3 times weekly)</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">4</div>
-                    <span>Treatment</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Treatment</span>
+                      <span class="step-desc">Target specific skin concerns</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">5</div>
-                    <span>Serum</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Serum</span>
+                      <span class="step-desc">Concentrated active ingredients</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                   <div class="routine-step">
                     <div class="step-number">6</div>
-                    <span>Moisturizer</span>
-                    <button class="btn btn-ghost btn-sm">+ Add Product</button>
+                    <div class="step-info">
+                      <span class="step-name">Moisturizer</span>
+                      <span class="step-desc">Lock in hydration overnight</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm">
+                      <i data-lucide="plus"></i> Add
+                    </button>
                   </div>
                 </div>
               </div>
@@ -602,59 +994,92 @@
               <div class="saved-product">
                 <div class="saved-product-image"></div>
                 <div class="saved-product-info">
-                  <h4>Saved Product 1</h4>
-                  <p>Category</p>
+                  <h4>Hydrating Serum</h4>
+                  <p>Serums</p>
+                  <div class="saved-product-price">$38</div>
                 </div>
-                <button class="btn btn-ghost btn-icon">
-                  <i data-lucide="heart" class="heart-filled"></i>
-                </button>
+                <div class="saved-product-actions">
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="shopping-cart"></i>
+                  </button>
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="heart" class="heart-filled"></i>
+                  </button>
+                </div>
               </div>
               <div class="saved-product">
                 <div class="saved-product-image"></div>
                 <div class="saved-product-info">
-                  <h4>Saved Product 2</h4>
-                  <p>Category</p>
+                  <h4>Gentle Cleanser</h4>
+                  <p>Cleansers</p>
+                  <div class="saved-product-price">$24</div>
                 </div>
-                <button class="btn btn-ghost btn-icon">
-                  <i data-lucide="heart" class="heart-filled"></i>
-                </button>
+                <div class="saved-product-actions">
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="shopping-cart"></i>
+                  </button>
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="heart" class="heart-filled"></i>
+                  </button>
+                </div>
               </div>
               <div class="saved-product">
                 <div class="saved-product-image"></div>
                 <div class="saved-product-info">
-                  <h4>Saved Product 3</h4>
-                  <p>Category</p>
+                  <h4>Vitamin C Serum</h4>
+                  <p>Serums</p>
+                  <div class="saved-product-price">$52</div>
                 </div>
-                <button class="btn btn-ghost btn-icon">
-                  <i data-lucide="heart" class="heart-filled"></i>
-                </button>
+                <div class="saved-product-actions">
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="shopping-cart"></i>
+                  </button>
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="heart" class="heart-filled"></i>
+                  </button>
+                </div>
               </div>
               <div class="saved-product">
                 <div class="saved-product-image"></div>
                 <div class="saved-product-info">
-                  <h4>Saved Product 4</h4>
-                  <p>Category</p>
+                  <h4>Exfoliating Toner</h4>
+                  <p>Toners</p>
+                  <div class="saved-product-price">$32</div>
                 </div>
-                <button class="btn btn-ghost btn-icon">
-                  <i data-lucide="heart" class="heart-filled"></i>
-                </button>
+                <div class="saved-product-actions">
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="shopping-cart"></i>
+                  </button>
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="heart" class="heart-filled"></i>
+                  </button>
+                </div>
               </div>
               <div class="saved-product">
                 <div class="saved-product-image"></div>
                 <div class="saved-product-info">
-                  <h4>Saved Product 5</h4>
-                  <p>Category</p>
+                  <h4>Calming Face Mask</h4>
+                  <p>Masks</p>
+                  <div class="saved-product-price">$28</div>
                 </div>
-                <button class="btn btn-ghost btn-icon">
-                  <i data-lucide="heart" class="heart-filled"></i>
-                </button>
+                <div class="saved-product-actions">
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="shopping-cart"></i>
+                  </button>
+                  <button class="btn btn-ghost btn-icon">
+                    <i data-lucide="heart" class="heart-filled"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="tab-content" id="results-tab">
             <div class="skin-profile">
-              <h3>Your Skin Profile</h3>
+              <div class="profile-header">
+                <h3>Your Skin Profile</h3>
+                <span class="profile-date">Last updated: April 28, 2025</span>
+              </div>
               <div class="profile-details">
                 <div class="profile-item">
                   <span class="profile-label">Skin Type</span>
@@ -677,6 +1102,16 @@
                   <span class="profile-value">Fragrance, Alcohol</span>
                 </div>
               </div>
+              <div class="profile-chart">
+                <h4>Skin Concerns Analysis</h4>
+                <div class="chart-placeholder">
+                  <div class="chart-bar" style="height: 80%;" data-label="Acne"></div>
+                  <div class="chart-bar" style="height: 65%;" data-label="Dullness"></div>
+                  <div class="chart-bar" style="height: 40%;" data-label="Texture"></div>
+                  <div class="chart-bar" style="height: 30%;" data-label="Dryness"></div>
+                  <div class="chart-bar" style="height: 20%;" data-label="Redness"></div>
+                </div>
+              </div>
               <button class="btn btn-primary btn-block">Retake Skin Quiz</button>
             </div>
           </div>
@@ -691,6 +1126,9 @@
       <div class="widgets-grid">
         <div class="widget-card">
           <div class="widget-header">
+            <div class="widget-icon">
+              <i data-lucide="check-circle-2"></i>
+            </div>
             <h3>Compatibility Checker</h3>
             <p>Check if your current routine has ingredient conflicts</p>
           </div>
@@ -699,13 +1137,37 @@
               <div class="compatibility-icon">
                 <i data-lucide="check"></i>
               </div>
-              <span>Vitamin C + Ferulic Acid</span>
-              <span class="compatibility-status">Compatible</span>
+              <div class="compatibility-info">
+                <span class="compatibility-pair">Vitamin C + Ferulic Acid</span>
+                <span class="compatibility-status">Compatible</span>
+              </div>
+              <button class="btn btn-ghost btn-icon">
+                <i data-lucide="info"></i>
+              </button>
             </div>
             <div class="compatibility-item incompatible">
-              <div class="compatibility-icon">!</div>
-              <span>Retinol + AHA/BHA</span>
-              <span class="compatibility-status">Avoid using together</span>
+              <div class="compatibility-icon">
+                <i data-lucide="x"></i>
+              </div>
+              <div class="compatibility-info">
+                <span class="compatibility-pair">Retinol + AHA/BHA</span>
+                <span class="compatibility-status">Avoid using together</span>
+              </div>
+              <button class="btn btn-ghost btn-icon">
+                <i data-lucide="info"></i>
+              </button>
+            </div>
+            <div class="compatibility-item caution">
+              <div class="compatibility-icon">
+                <i data-lucide="alert-triangle"></i>
+              </div>
+              <div class="compatibility-info">
+                <span class="compatibility-pair">Niacinamide + Vitamin C</span>
+                <span class="compatibility-status">Use with caution</span>
+              </div>
+              <button class="btn btn-ghost btn-icon">
+                <i data-lucide="info"></i>
+              </button>
             </div>
             <button class="btn btn-primary btn-block">Check My Products</button>
           </div>
@@ -713,6 +1175,9 @@
 
         <div class="widget-card">
           <div class="widget-header">
+            <div class="widget-icon">
+              <i data-lucide="message-square-text"></i>
+            </div>
             <h3>Skincare Assistant</h3>
             <p>Get answers to your skincare questions</p>
           </div>
@@ -720,14 +1185,15 @@
             <div class="chat-bubble">
               <p class="chat-question">"How often should I exfoliate my combination skin?"</p>
               <div class="chat-answer">
-                For combination skin, exfoliating 2-3 times per week is generally recommended. Start with once a
-                week and gradually increase frequency based on how your skin responds.
+                <p>For combination skin, exfoliating 2-3 times per week is generally recommended. Start with once a
+                week and gradually increase frequency based on how your skin responds.</p>
+                <p>Pay attention to how your skin feels after exfoliation - if it feels tight or irritated, reduce frequency.</p>
               </div>
             </div>
             <div class="chat-input">
               <input type="text" placeholder="Ask a question...">
               <button class="btn btn-icon btn-primary">
-                <i data-lucide="arrow-right"></i>
+                <i data-lucide="send"></i>
               </button>
             </div>
           </div>
@@ -736,8 +1202,36 @@
     </div>
   </section>
 
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-card">
+        <div class="newsletter-content">
+          <h2>Stay Updated with Skincare Tips</h2>
+          <p>Join our newsletter for personalized skincare advice, product recommendations, and exclusive offers.</p>
+          <form class="newsletter-form">
+            <div class="input-wrapper">
+              <i data-lucide="mail" class="input-icon"></i>
+              <input type="email" placeholder="Your email address">
+            </div>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+          <div class="newsletter-privacy">
+            We respect your privacy. Unsubscribe at any time.
+          </div>
+        </div>
+        <div class="newsletter-decoration">
+          <div class="decoration-circle decoration-circle-1"></div>
+          <div class="decoration-circle decoration-circle-2"></div>
+          <div class="decoration-circle decoration-circle-3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Chat Bubble -->
   <div class="chat-bubble-fixed">
+    <div class="chat-bubble-pulse"></div>
     <button class="btn btn-primary btn-round">
       <i data-lucide="message-circle"></i>
     </button>
@@ -748,20 +1242,23 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <h3>DearSkin</h3>
+          <a href="/" class="logo">
+            <span class="logo-icon">✿</span>
+            <span class="logo-text">DearSkin</span>
+          </a>
           <p>Personalized skincare recommendations powered by AI</p>
           <div class="social-links">
-            <a href="#" class="social-link">
+            <a href="#" class="social-link" aria-label="Instagram">
               <i data-lucide="instagram"></i>
-              <span class="sr-only">Instagram</span>
             </a>
-            <a href="#" class="social-link">
+            <a href="#" class="social-link" aria-label="Facebook">
               <i data-lucide="facebook"></i>
-              <span class="sr-only">Facebook</span>
             </a>
-            <a href="#" class="social-link">
+            <a href="#" class="social-link" aria-label="Twitter">
               <i data-lucide="twitter"></i>
-              <span class="sr-only">Twitter</span>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube">
+              <i data-lucide="youtube"></i>
             </a>
           </div>
         </div>
@@ -770,7 +1267,8 @@
           <h4>Navigation</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="dashboard">Dashboard</a></li>
+            <li><a href="/products">Products</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
@@ -783,6 +1281,7 @@
             <li><a href="#">Ingredient Guide</a></li>
             <li><a href="#">Skincare Blog</a></li>
             <li><a href="#">FAQ</a></li>
+            <li><a href="#">Skin Quiz</a></li>
           </ul>
         </div>
 
@@ -792,30 +1291,67 @@
             <li><a href="#">Terms of Service</a></li>
             <li><a href="#">Privacy Policy</a></li>
             <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Accessibility</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p> 2025 DearSkin. All rights reserved.</p>
+        <p>&copy; 2025 DearSkin. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
       </div>
     </div>
   </footer>
 
-<!-- Lucide Icon Script -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    lucide.createIcons();
-  });
-</script>
-
-<!-- JS Modules -->
-<script type="module" src="supabase.js"></script>
-<script type="module" src="script.js"></script>
-
-
-
-
+  <script type="module" src="script.js"></script>
+  <script type="module">
+    import { supabase } from './supabase.js'
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check if user is logged in
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      // Auth buttons
+      const loginButton = document.querySelector('.auth-buttons .btn-ghost')
+      const signupButton = document.querySelector('.auth-buttons .btn-primary')
+      const mobileLoginButton = document.querySelector('.mobile-auth-buttons .btn-ghost')
+      const mobileSignupButton = document.querySelector('.mobile-auth-buttons .btn-primary')
+      
+      if (user) {
+        // User is logged in, show profile and logout options
+        if (loginButton && signupButton) {
+          loginButton.textContent = 'My Profile'
+          loginButton.onclick = () => {
+            window.location.href = 'dashboard.html'
+          }
+          
+          signupButton.textContent = 'Logout'
+          signupButton.onclick = async () => {
+            await supabase.auth.signOut()
+            window.location.reload()
+          }
+        }
+        
+        // Update mobile buttons too
+        if (mobileLoginButton && mobileSignupButton) {
+          mobileLoginButton.textContent = 'My Profile'
+          mobileLoginButton.onclick = () => {
+            window.location.href = 'dashboard.html'
+          }
+          
+          mobileSignupButton.textContent = 'Logout'
+          mobileSignupButton.onclick = async () => {
+            await supabase.auth.signOut()
+            window.location.reload()
+          }
+        }
+      }
+      // No else needed since we're using direct onclick handlers for non-logged-in users
+    })
+  </script>
 </body>
 </html>

@@ -5,6 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DearSkin - Dashboard</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .dashboard-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-2xl);
+      margin-top: var(--spacing-3xl);
+    }
+    .card-block {
+      background-color: var(--white);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-block:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+    }
+    .card-block h3 {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      margin-bottom: var(--spacing-md);
+      font-family: "Playfair Display", serif;
+      gap: var(--spacing-sm);
+      color: var(--charcoal);
+    }
+    .routine-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+    ul#past-purchases {
+      list-style: disc;
+      padding-left: var(--spacing-xl);
+      color: var(--taupe);
+      font-size: 1rem;
+    }
+    .section-description {
+      color: var(--taupe);
+      font-size: 1.1rem;
+      margin-bottom: var(--spacing-xl);
+    }
+  </style>
+  <script type="module">
+    import { supabase } from './supabase.js';
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return window.location.href = 'auth.html?mode=login';
+
+      // Greet user
+      const profile = await supabase.from('profiles').select('*').eq('id', user.id).single();
+      const name = profile.data?.name || 'there';
+      document.getElementById('welcome-text').innerText = `Hola ${name}! 🌸`;
+
+      // Populate past purchases (stubbed)
+      const purchases = ["Gentle Cleanser", "Vitamin C Serum", "Calming Mask"];
+      const purchaseList = document.getElementById("past-purchases");
+      purchases.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        purchaseList.appendChild(li);
+      });
+
+      // Add to Routine
+      document.querySelectorAll('.btn-add-to-routine').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const step = btn.dataset.step;
+          const productId = btn.dataset.productId;
+          await supabase.from('routine').insert({ user_id: user.id, step, product_id: productId });
+          alert(`Product added to your ${step} routine.`);
+        });
+      });
+
+      // Save Product
+      document.querySelectorAll('.btn-save-product').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const productId = btn.dataset.productId;
+          await supabase.from('saved_products').insert({ user_id: user.id, product_id: productId });
+          alert(`Product saved.`);
+        });
+      });
+
+      // Remove from Saved
+      document.querySelectorAll('.btn-remove-saved').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const productId = btn.dataset.productId;
+          await supabase.from('saved_products').delete().match({ user_id: user.id, product_id: productId });
+          alert(`Product removed from saved.`);
+          window.location.reload();
+        });
+      });
+
+      // Retake Quiz
+      const retakeBtn = document.getElementById('retake-quiz-btn');
+      retakeBtn?.addEventListener('click', () => window.location.href = 'onboarding.html');
+
+      // Hormonal Phase Awareness
+      const hormonalPhase = ["Follicular", "Ovulation", "Luteal", "Menstrual"];
+      const phase = hormonalPhase[Math.floor(Math.random() * hormonalPhase.length)];
+      document.getElementById("hormonal-phase").innerText = `Current Hormonal Phase: ${phase}`;
+    });
+  </script>
 </head>
 <body>
   <header class="navbar">
@@ -13,6 +118,7 @@
         <a href="index.html" class="logo">DearSkin</a>
         <nav class="desktop-nav">
           <a href="index.html" class="nav-link">Home</a>
+          
           <a href="dashboard.html" class="nav-link active">Dashboard</a>
           <a href="onboarding.html" class="nav-link">Onboarding</a>
           <a href="products.html" class="nav-link">Products</a>
@@ -23,12 +129,35 @@
     </div>
   </header>
 
-  <!-- Dashboard Content -->
   <section class="dashboard">
     <div class="container">
-      <h2>Your Skincare Dashboard</h2>
-      <p class="section-description">Track your routine, saved products, and skin progress all in one place</p>
-      <!-- Include the tabbed routine/saved/results structure here from original HTML -->
+      <h2 id="welcome-text">Hola!</h2>
+      <p class="section-description">Track your routine, past purchases, and receive dynamic suggestions from DearSkin</p>
+
+      <div class="dashboard-section">
+        <div class="card-block">
+          <h3><span>🧴</span> Current Routine</h3>
+          <div class="routine-actions">
+            <button class="btn btn-primary btn-add-to-routine" data-step="morning" data-product-id="1">Add Vitamin C Serum to Morning</button>
+            <button class="btn btn-outline btn-save-product" data-product-id="1">Save Vitamin C Serum</button>
+            <button class="btn btn-ghost btn-remove-saved" data-product-id="1">Remove from Saved</button>
+          </div>
+        </div>
+
+        <div class="card-block">
+          <h3><span>🛍️</span> Previously Purchased Items</h3>
+          <ul id="past-purchases"></ul>
+        </div>
+
+        <div class="card-block">
+          <h3><span>📆</span> Dynamic Skin Factors</h3>
+          <p id="hormonal-phase">Current Hormonal Phase: Loading...</p>
+        </div>
+
+        <div class="card-block">
+          <button id="retake-quiz-btn" class="btn btn-primary btn-block">Retake Skin Quiz</button>
+        </div>
+      </div>
     </div>
   </section>
 </body>
