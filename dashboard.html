@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DearSkin - Dashboard</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="animation.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     .dashboard-section {
       display: flex;
@@ -12,17 +15,64 @@
       gap: var(--spacing-2xl);
       margin-top: var(--spacing-3xl);
     }
+    
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: var(--spacing-2xl);
+      position: relative;
+    }
+    
+    .dashboard-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-sm);
+      color: var(--rose-dark);
+    }
+    
+    .dashboard-header p {
+      color: var(--taupe);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+    
+    @media (min-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+    
+    .dashboard-main {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xl);
+    }
+    
+    .dashboard-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xl);
+    }
+    
     .card-block {
       background-color: var(--white);
       border-radius: var(--radius-lg);
       padding: var(--spacing-xl);
       box-shadow: var(--shadow-lg);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+    
     .card-block:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-xl);
     }
+    
     .card-block h3 {
       display: flex;
       align-items: center;
@@ -32,22 +82,590 @@
       gap: var(--spacing-sm);
       color: var(--charcoal);
     }
+    
+    .card-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .card-block-header h3 {
+      margin-bottom: 0;
+    }
+    
+    .card-block-actions {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+    
     .routine-actions {
       display: flex;
       flex-wrap: wrap;
       gap: var(--spacing-md);
       margin-top: var(--spacing-md);
     }
-    ul#past-purchases {
-      list-style: disc;
-      padding-left: var(--spacing-xl);
-      color: var(--taupe);
-      font-size: 1rem;
+    
+    .routine-step {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-sm);
+      background-color: var(--beige-light);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-sm);
+      transition: all 0.3s ease;
     }
-    .section-description {
+    
+    .routine-step:hover {
+      background-color: var(--rose-light);
+      transform: translateX(5px);
+    }
+    
+    .routine-step-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--spacing-md);
+      color: var(--rose);
+    }
+    
+    .routine-step-content {
+      flex: 1;
+    }
+    
+    .routine-step-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    
+    .routine-step-product {
+      font-size: 0.875rem;
       color: var(--taupe);
-      font-size: 1.1rem;
-      margin-bottom: var(--spacing-xl);
+    }
+    
+    .routine-step-actions {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+    
+    .progress-container {
+      margin: var(--spacing-md) 0;
+    }
+    
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-xs);
+      font-size: 0.875rem;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background-color: var(--beige);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-full);
+      transition: width 1s ease;
+    }
+    
+    .skin-journal {
+      margin-top: var(--spacing-md);
+    }
+    
+    .journal-entry {
+      padding: var(--spacing-md);
+      background-color: var(--beige-light);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .journal-entry-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .journal-entry-date {
+      font-size: 0.875rem;
+      color: var(--taupe);
+    }
+    
+    .journal-entry-mood {
+      font-weight: 600;
+    }
+    
+    .journal-entry-content {
+      font-size: 0.95rem;
+    }
+    
+    .journal-form {
+      margin-top: var(--spacing-md);
+    }
+    
+    .journal-form textarea {
+      width: 100%;
+      padding: var(--spacing-md);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(140, 124, 124, 0.3);
+      margin-bottom: var(--spacing-sm);
+      font-family: "Lora", serif;
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    .mood-selector {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .mood-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .mood-option input {
+      display: none;
+    }
+    
+    .mood-icon {
+      font-size: 1.5rem;
+      margin-bottom: var(--spacing-xs);
+      transition: transform 0.3s ease;
+    }
+    
+    .mood-option input:checked + label .mood-icon {
+      transform: scale(1.2);
+    }
+    
+    .mood-label {
+      font-size: 0.75rem;
+      color: var(--taupe);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-md);
+    }
+    
+    .stat-card {
+      background-color: var(--beige-light);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      background-color: var(--rose-light);
+      transform: translateY(-3px);
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--rose-dark);
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--taupe);
+    }
+    
+    .product-recommendation {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-md);
+      background-color: var(--beige-light);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+      transition: all 0.3s ease;
+    }
+    
+    .product-recommendation:hover {
+      background-color: var(--rose-light);
+      transform: translateY(-3px);
+    }
+    
+    .product-recommendation-image {
+      width: 60px;
+      height: 60px;
+      background-color: var(--white);
+      border-radius: var(--radius-md);
+      margin-right: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--taupe);
+      font-size: 0.75rem;
+      text-align: center;
+    }
+    
+    .product-recommendation-content {
+      flex: 1;
+    }
+    
+    .product-recommendation-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    
+    .product-recommendation-reason {
+      font-size: 0.875rem;
+      color: var(--taupe);
+    }
+    
+    .product-recommendation-match {
+      font-size: 0.75rem;
+      color: var(--rose-dark);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    
+    .calendar-view {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      margin-top: var(--spacing-md);
+    }
+    
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--beige-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .calendar-day:hover {
+      background-color: var(--rose-light);
+      transform: scale(1.1);
+      z-index: 1;
+    }
+    
+    .calendar-day.has-entry::after {
+      content: "";
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background-color: var(--rose);
+      border-radius: 50%;
+    }
+    
+    .calendar-day.today {
+      background-color: var(--rose-light);
+      font-weight: 600;
+      color: var(--rose-dark);
+    }
+    
+    .calendar-day.selected {
+      background-color: var(--rose);
+      color: var(--white);
+    }
+    
+    .calendar-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .calendar-weekday {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--taupe);
+      padding: var(--spacing-xs) 0;
+    }
+    
+    .calendar-month {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .calendar-month-name {
+      font-weight: 600;
+    }
+    
+    .calendar-controls {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+    
+    .calendar-control {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--beige-light);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .calendar-control:hover {
+      background-color: var(--rose-light);
+      color: var(--rose-dark);
+    }
+    
+    .skin-factors {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+    
+    .skin-factor {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-sm);
+      background-color: var(--beige-light);
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
+    }
+    
+    .skin-factor:hover {
+      background-color: var(--rose-light);
+      transform: translateX(5px);
+    }
+    
+    .skin-factor-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--spacing-md);
+      color: var(--rose);
+    }
+    
+    .skin-factor-content {
+      flex: 1;
+    }
+    
+    .skin-factor-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    
+    .skin-factor-value {
+      font-size: 0.875rem;
+      color: var(--taupe);
+    }
+    
+    .past-purchases {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .purchase-item {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-sm);
+      border-bottom: 1px solid rgba(140, 124, 124, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .purchase-item:last-child {
+      border-bottom: none;
+    }
+    
+    .purchase-item:hover {
+      background-color: var(--beige-light);
+      transform: translateX(5px);
+    }
+    
+    .purchase-item-image {
+      width: 40px;
+      height: 40px;
+      background-color: var(--beige-light);
+      border-radius: var(--radius-md);
+      margin-right: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--taupe);
+      font-size: 0.75rem;
+      text-align: center;
+    }
+    
+    .purchase-item-content {
+      flex: 1;
+    }
+    
+    .purchase-item-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    
+    .purchase-item-date {
+      font-size: 0.75rem;
+      color: var(--taupe);
+    }
+    
+    .purchase-item-actions {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+    
+    .badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      background-color: var(--rose-light);
+      color: var(--rose-dark);
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: 0.5px;
+    }
+    
+    .badge-outline {
+      background-color: transparent;
+      border: 1px solid var(--rose);
+    }
+    
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--rose-light) 0%, var(--rose) 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      margin-bottom: var(--spacing-2xl);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+    
+    .welcome-title {
+      font-size: 2rem;
+      color: var(--charcoal);
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .welcome-text {
+      color: var(--charcoal);
+      margin-bottom: var(--spacing-md);
+      opacity: 0.9;
+    }
+    
+    .welcome-decoration {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 40%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    
+    .welcome-circle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .welcome-circle-1 {
+      width: 200px;
+      height: 200px;
+      top: -50px;
+      right: -50px;
+    }
+    
+    .welcome-circle-2 {
+      width: 150px;
+      height: 150px;
+      bottom: 20px;
+      right: 50px;
+    }
+    
+    .welcome-circle-3 {
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      right: 100px;
+    }
+    
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+    
+    .streak-container {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+      padding: var(--spacing-md);
+      background-color: var(--beige-light);
+      border-radius: var(--radius-md);
+    }
+    
+    .streak-icon {
+      width: 50px;
+      height: 50px;
+      background-color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--rose);
+      font-size: 1.5rem;
+    }
+    
+    .streak-content {
+      flex: 1;
+    }
+    
+    .streak-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--rose-dark);
+      margin-bottom: 2px;
+    }
+    
+    .streak-label {
+      font-size: 0.875rem;
+      color: var(--taupe);
     }
   </style>
   <script type="module">
@@ -115,50 +733,759 @@
   <header class="navbar">
     <div class="container">
       <div class="navbar-content">
-        <a href="index.html" class="logo">DearSkin</a>
+        <a href="index.html" class="logo">
+          <span class="logo-icon">✿</span>
+          <span class="logo-text">DearSkin</span>
+        </a>
         <nav class="desktop-nav">
           <a href="index.html" class="nav-link">Home</a>
           
           <a href="dashboard.html" class="nav-link active">Dashboard</a>
-          <a href="onboarding.html" class="nav-link">Onboarding</a>
           <a href="products.html" class="nav-link">Products</a>
           <a href="ingredients.html" class="nav-link">Ingredients</a>
           <a href="widgets.html" class="nav-link">Widgets</a>
         </nav>
+        <div class="auth-buttons">
+          <button class="btn btn-ghost" id="profile-btn">My Profile</button>
+          <button class="btn btn-primary" id="logout-btn">Logout</button>
+        </div>
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu">
+          <i data-lucide="menu"></i>
+        </button>
       </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <nav class="mobile-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+        <a href="products.html" class="nav-link">Products</a>
+        <a href="ingredients.html" class="nav-link">Ingredients</a>
+        <a href="widgets.html" class="nav-link">Widgets</a>
+        <div class="mobile-auth-buttons">
+          <button class="btn btn-ghost" id="mobile-profile-btn">My Profile</button>
+          <button class="btn btn-primary" id="mobile-logout-btn">Logout</button>
+        </div>
+      </nav>
     </div>
   </header>
 
   <section class="dashboard">
     <div class="container">
-      <h2 id="welcome-text">Hola!</h2>
-      <p class="section-description">Track your routine, past purchases, and receive dynamic suggestions from DearSkin</p>
+      <div class="welcome-banner">
+        <div class="welcome-content">
+          <h1 class="welcome-title" id="welcome-text">Welcome back, Sarah! 🌸</h1>
+          <p class="welcome-text">Your skin journey is progressing well. Here's your personalized dashboard with updates and recommendations.</p>
+          <div class="quick-actions">
+            <button class="btn btn-primary">Update Skin Journal</button>
+            <button class="btn btn-outline">View Recommendations</button>
+          </div>
+        </div>
+        <div class="welcome-decoration">
+          <div class="welcome-circle welcome-circle-1"></div>
+          <div class="welcome-circle welcome-circle-2"></div>
+          <div class="welcome-circle welcome-circle-3"></div>
+        </div>
+      </div>
 
-      <div class="dashboard-section">
-        <div class="card-block">
-          <h3><span>🧴</span> Current Routine</h3>
-          <div class="routine-actions">
-            <button class="btn btn-primary btn-add-to-routine" data-step="morning" data-product-id="1">Add Vitamin C Serum to Morning</button>
-            <button class="btn btn-outline btn-save-product" data-product-id="1">Save Vitamin C Serum</button>
-            <button class="btn btn-ghost btn-remove-saved" data-product-id="1">Remove from Saved</button>
+      <div class="dashboard-grid">
+        <div class="dashboard-main">
+          <div class="card-block">
+            <div class="card-block-header">
+              <h3><i data-lucide="calendar-clock" class="icon"></i> Your Skincare Routine</h3>
+              <div class="card-block-actions">
+                <button class="btn btn-ghost btn-sm">
+                  <i data-lucide="edit"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="tabs">
+              <div class="tabs-list">
+                <button class="tab-button active" data-tab="morning">
+                  <i data-lucide="sun"></i>
+                  Morning
+                </button>
+                <button class="tab-button" data-tab="evening">
+                  <i data-lucide="moon"></i>
+                  Evening
+                </button>
+                <button class="tab-button" data-tab="weekly">
+                  <i data-lucide="calendar"></i>
+                  Weekly
+                </button>
+              </div>
+
+              <div class="tab-content active" id="morning-tab">
+                <div class="routine-steps">
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="droplets"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Cleanser</div>
+                      <div class="routine-step-product">Gentle Foaming Cleanser</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="flask-round"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Toner</div>
+                      <div class="routine-step-product">Hydrating Toner</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="flask-conical"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Serum</div>
+                      <div class="routine-step-product">Vitamin C Serum</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="flower"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Moisturizer</div>
+                      <div class="routine-step-product">Daily Hydrating Cream</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="sun"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Sunscreen</div>
+                      <div class="routine-step-product">SPF 50 Lightweight Sunscreen</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-content" id="evening-tab">
+                <div class="routine-steps">
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="sparkles"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Makeup Remover</div>
+                      <div class="routine-step-product">Cleansing Balm</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="droplets"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Cleanser</div>
+                      <div class="routine-step-product">Gentle Foaming Cleanser</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="flask-round"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Toner</div>
+                      <div class="routine-step-product">Hydrating Toner</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="flask-conical"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Treatment</div>
+                      <div class="routine-step-product">Retinol Serum</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="flower"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Moisturizer</div>
+                      <div class="routine-step-product">Night Repair Cream</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-content" id="weekly-tab">
+                <div class="routine-steps">
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="sparkles"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Exfoliation (2x weekly)</div>
+                      <div class="routine-step-product">AHA/BHA Exfoliating Solution</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="routine-step">
+                    <div class="routine-step-icon">
+                      <i data-lucide="heart"></i>
+                    </div>
+                    <div class="routine-step-content">
+                      <div class="routine-step-name">Face Mask (1x weekly)</div>
+                      <div class="routine-step-product">Hydrating Sheet Mask</div>
+                    </div>
+                    <div class="routine-step-actions">
+                      <button class="btn btn-ghost btn-sm">
+                        <i data-lucide="edit"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="streak-container">
+              <div class="streak-icon">🔥</div>
+              <div class="streak-content">
+                <div class="streak-value">14 Days</div>
+                <div class="streak-label">Current skincare routine streak</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-block">
+            <div class="card-block-header">
+              <h3><i data-lucide="clipboard-list" class="icon"></i> Skin Journal</h3>
+              <div class="card-block-actions">
+                <button class="btn btn-ghost btn-sm">
+                  <i data-lucide="calendar"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="skin-journal">
+              <div class="journal-entry">
+                <div class="journal-entry-header">
+                  <div class="journal-entry-date">Today, 9:30 AM</div>
+                  <div class="journal-entry-mood">😊 Happy</div>
+                </div>
+                <div class="journal-entry-content">
+                  Skin feels hydrated and calm today. The new moisturizer seems to be working well. No new breakouts.
+                </div>
+              </div>
+
+              <div class="journal-entry">
+                <div class="journal-entry-header">
+                  <div class="journal-entry-date">Yesterday, 10:15 PM</div>
+                  <div class="journal-entry-mood">😐 Neutral</div>
+                </div>
+                <div class="journal-entry-content">
+                  Noticed some redness around my nose. Might be due to the weather change. Applied extra hydration.
+                </div>
+              </div>
+
+              <div class="journal-form">
+                <h4>Add Today's Entry</h4>
+                <div class="mood-selector">
+                  <div class="mood-option">
+                    <input type="radio" id="mood-happy" name="mood" value="happy">
+                    <label for="mood-happy">
+                      <div class="mood-icon">😊</div>
+                      <div class="mood-label">Happy</div>
+                    </label>
+                  </div>
+                  <div class="mood-option">
+                    <input type="radio" id="mood-neutral" name="mood" value="neutral">
+                    <label for="mood-neutral">
+                      <div class="mood-icon">😐</div>
+                      <div class="mood-label">Neutral</div>
+                    </label>
+                  </div>
+                  <div class="mood-option">
+                    <input type="radio" id="mood-concerned" name="mood" value="concerned">
+                    <label for="mood-concerned">
+                      <div class="mood-icon">😟</div>
+                      <div class="mood-label">Concerned</div>
+                    </label>
+                  </div>
+                  <div class="mood-option">
+                    <input type="radio" id="mood-irritated" name="mood" value="irritated">
+                    <label for="mood-irritated">
+                      <div class="mood-icon">😣</div>
+                      <div class="mood-label">Irritated</div>
+                    </label>
+                  </div>
+                </div>
+                <textarea placeholder="How does your skin feel today? Note any changes or concerns..."></textarea>
+                <button class="btn btn-primary">Save Entry</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-block">
+            <div class="card-block-header">
+              <h3><i data-lucide="bar-chart-2" class="icon"></i> Skin Progress</h3>
+              <div class="card-block-actions">
+                <button class="btn btn-ghost btn-sm">
+                  <i data-lucide="calendar-range"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Hydration</span>
+                <span>75%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%"></div>
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Texture</span>
+                <span>60%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 60%"></div>
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Brightness</span>
+                <span>80%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 80%"></div>
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Acne Reduction</span>
+                <span>65%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 65%"></div>
+              </div>
+            </div>
+
+            <div class="badge-container">
+              <div class="badge">Improved Hydration</div>
+              <div class="badge">Reduced Redness</div>
+              <div class="badge badge-outline">Working on Texture</div>
+            </div>
           </div>
         </div>
 
-        <div class="card-block">
-          <h3><span>🛍️</span> Previously Purchased Items</h3>
-          <ul id="past-purchases"></ul>
-        </div>
+        <div class="dashboard-sidebar">
+          <div class="card-block">
+            <h3><i data-lucide="sparkles" class="icon"></i> Personalized Recommendations</h3>
+            <div class="product-recommendation">
+              <div class="product-recommendation-image">Product</div>
+              <div class="product-recommendation-content">
+                <div class="product-recommendation-name">Niacinamide Serum</div>
+                <div class="product-recommendation-reason">For pore reduction</div>
+                <div class="product-recommendation-match">98% match</div>
+              </div>
+            </div>
+            <div class="product-recommendation">
+              <div class="product-recommendation-image">Product</div>
+              <div class="product-recommendation-content">
+                <div class="product-recommendation-name">Ceramide Moisturizer</div>
+                <div class="product-recommendation-reason">For barrier repair</div>
+                <div class="product-recommendation-match">95% match</div>
+              </div>
+            </div>
+            <div class="product-recommendation">
+              <div class="product-recommendation-image">Product</div>
+              <div class="product-recommendation-content">
+                <div class="product-recommendation-name">Gentle Exfoliating Toner</div>
+                <div class="product-recommendation-reason">For texture improvement</div>
+                <div class="product-recommendation-match">92% match</div>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-block">View All Recommendations</button>
+          </div>
 
-        <div class="card-block">
-          <h3><span>📆</span> Dynamic Skin Factors</h3>
-          <p id="hormonal-phase">Current Hormonal Phase: Loading...</p>
-        </div>
+          <div class="card-block">
+            <h3><i data-lucide="calendar" class="icon"></i> Skin Calendar</h3>
+            <div class="calendar-month">
+              <div class="calendar-month-name">May 2025</div>
+              <div class="calendar-controls">
+                <button class="calendar-control">
+                  <i data-lucide="chevron-left"></i>
+                </button>
+                <button class="calendar-control">
+                  <i data-lucide="chevron-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="calendar-header">
+              <div class="calendar-weekday">Su</div>
+              <div class="calendar-weekday">Mo</div>
+              <div class="calendar-weekday">Tu</div>
+              <div class="calendar-weekday">We</div>
+              <div class="calendar-weekday">Th</div>
+              <div class="calendar-weekday">Fr</div>
+              <div class="calendar-weekday">Sa</div>
+            </div>
+            <div class="calendar-view">
+              <div class="calendar-day">28</div>
+              <div class="calendar-day">29</div>
+              <div class="calendar-day">30</div>
+              <div class="calendar-day has-entry">1</div>
+              <div class="calendar-day">2</div>
+              <div class="calendar-day has-entry">3</div>
+              <div class="calendar-day">4</div>
+              <div class="calendar-day has-entry">5</div>
+              <div class="calendar-day">6</div>
+              <div class="calendar-day has-entry">7</div>
+              <div class="calendar-day">8</div>
+              <div class="calendar-day has-entry">9</div>
+              <div class="calendar-day">10</div>
+              <div class="calendar-day">11</div>
+              <div class="calendar-day has-entry">12</div>
+              <div class="calendar-day">13</div>
+              <div class="calendar-day has-entry">14</div>
+              <div class="calendar-day">15</div>
+              <div class="calendar-day has-entry">16</div>
+              <div class="calendar-day">17</div>
+              <div class="calendar-day has-entry">18</div>
+              <div class="calendar-day">19</div>
+              <div class="calendar-day">20</div>
+              <div class="calendar-day has-entry">21</div>
+              <div class="calendar-day">22</div>
+              <div class="calendar-day has-entry">23</div>
+              <div class="calendar-day">24</div>
+              <div class="calendar-day">25</div>
+              <div class="calendar-day has-entry">26</div>
+              <div class="calendar-day">27</div>
+              <div class="calendar-day today selected">28</div>
+              <div class="calendar-day">29</div>
+              <div class="calendar-day">30</div>
+              <div class="calendar-day">31</div>
+              <div class="calendar-day">1</div>
+            </div>
+          </div>
 
-        <div class="card-block">
-          <button id="retake-quiz-btn" class="btn btn-primary btn-block">Retake Skin Quiz</button>
+          <div class="card-block">
+            <h3><i data-lucide="activity" class="icon"></i> Dynamic Skin Factors</h3>
+            <div class="skin-factors">
+              <div class="skin-factor">
+                <div class="skin-factor-icon">
+                  <i data-lucide="moon"></i>
+                </div>
+                <div class="skin-factor-content">
+                  <div class="skin-factor-name">Hormonal Phase</div>
+                  <div class="skin-factor-value" id="hormonal-phase">Luteal Phase</div>
+                </div>
+              </div>
+              <div class="skin-factor">
+                <div class="skin-factor-icon">
+                  <i data-lucide="cloud-sun"></i>
+                </div>
+                <div class="skin-factor-content">
+                  <div class="skin-factor-name">Weather Impact</div>
+                  <div class="skin-factor-value">High Humidity (75%)</div>
+                </div>
+              </div>
+              <div class="skin-factor">
+                <div class="skin-factor-icon">
+                  <i data-lucide="utensils"></i>
+                </div>
+                <div class="skin-factor-content">
+                  <div class="skin-factor-name">Diet Impact</div>
+                  <div class="skin-factor-value">Moderate (Dairy consumption)</div>
+                </div>
+              </div>
+              <div class="skin-factor">
+                <div class="skin-factor-icon">
+                  <i data-lucide="bed"></i>
+                </div>
+                <div class="skin-factor-content">
+                  <div class="skin-factor-name">Sleep Quality</div>
+                  <div class="skin-factor-value">Good (7.5 hours avg)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-block">
+            <h3><i data-lucide="shopping-bag" class="icon"></i> Previously Purchased</h3>
+            <ul class="past-purchases" id="past-purchases">
+              <li class="purchase-item">
+                <div class="purchase-item-image">P</div>
+                <div class="purchase-item-content">
+                  <div class="purchase-item-name">Gentle Cleanser</div>
+                  <div class="purchase-item-date">Purchased: Apr 15, 2025</div>
+                </div>
+                <div class="purchase-item-actions">
+                  <button class="btn btn-ghost btn-sm">
+                    <i data-lucide="repeat"></i>
+                  </button>
+                </div>
+              </li>
+              <li class="purchase-item">
+                <div class="purchase-item-image">P</div>
+                <div class="purchase-item-content">
+                  <div class="purchase-item-name">Vitamin C Serum</div>
+                  <div class="purchase-item-date">Purchased: Mar 28, 2025</div>
+                </div>
+                <div class="purchase-item-actions">
+                  <button class="btn btn-ghost btn-sm">
+                    <i data-lucide="repeat"></i>
+                  </button>
+                </div>
+              </li>
+              <li class="purchase-item">
+                <div class="purchase-item-image">P</div>
+                <div class="purchase-item-content">
+                  <div class="purchase-item-name">Calming Mask</div>
+                  <div class="purchase-item-date">Purchased: Mar 10, 2025</div>
+                </div>
+                <div class="purchase-item-actions">
+                  <button class="btn btn-ghost btn-sm">
+                    <i data-lucide="repeat"></i>
+                  </button>
+                </div>
+              </li>
+            </ul>
+            <button class="btn btn-outline btn-block">View Purchase History</button>
+          </div>
+
+          <div class="card-block">
+            <h3><i data-lucide="clipboard-check" class="icon"></i> Quick Actions</h3>
+            <div class="routine-actions">
+              <button class="btn btn-primary btn-block" id="retake-quiz-btn">Retake Skin Quiz</button>
+              <button class="btn btn-outline btn-block">Update Skin Goals</button>
+              <button class="btn btn-outline btn-block">Track Skin Concerns</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Initialize Lucide icons
+      lucide.createIcons();
+      
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener("click", () => {
+          mobileMenu.classList.toggle("active");
+          
+          const icon = mobileMenuButton.querySelector("i");
+          if (icon) {
+            if (mobileMenu.classList.contains("active")) {
+              icon.setAttribute("data-lucide", "x");
+            } else {
+              icon.setAttribute("data-lucide", "menu");
+            }
+            lucide.createIcons();
+          }
+        });
+      }
+      
+      // Tabs functionality
+      const tabButtons = document.querySelectorAll(".tab-button");
+      const tabContents = document.querySelectorAll(".tab-content");
+      
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const tabId = button.getAttribute("data-tab");
+          
+          // Remove active class from all buttons and contents
+          tabButtons.forEach((btn) => btn.classList.remove("active"));
+          tabContents.forEach((content) => content.classList.remove("active"));
+          
+          // Add active class to clicked button and corresponding content
+          button.classList.add("active");
+          document.getElementById(`${tabId}-tab`).classList.add("active");
+        });
+      });
+      
+      // Calendar day selection
+      const calendarDays = document.querySelectorAll(".calendar-day");
+      
+      calendarDays.forEach((day) => {
+        day.addEventListener("click", () => {
+          calendarDays.forEach((d) => d.classList.remove("selected"));
+          day.classList.add("selected");
+        });
+      });
+      
+      // Mood selection
+      const moodOptions = document.querySelectorAll(".mood-option input");
+      
+      moodOptions.forEach((option) => {
+        option.addEventListener("change", () => {
+          moodOptions.forEach((opt) => {
+            const label = opt.nextElementSibling;
+            const icon = label.querySelector(".mood-icon");
+            
+            if (opt.checked) {
+              icon.style.transform = "scale(1.2)";
+            } else {
+              icon.style.transform = "scale(1)";
+            }
+          });
+        });
+      });
+      
+      // Journal form submission
+      const journalForm = document.querySelector(".journal-form");
+      const journalTextarea = journalForm.querySelector("textarea");
+      const journalSubmitButton = journalForm.querySelector("button");
+      
+      journalSubmitButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        const selectedMood = document.querySelector(".mood-option input:checked");
+        const journalText = journalTextarea.value.trim();
+        
+        if (!selectedMood) {
+          alert("Please select a mood for your journal entry.");
+          return;
+        }
+        
+        if (!journalText) {
+          alert("Please enter some text for your journal entry.");
+          return;
+        }
+        
+        const moodLabel = selectedMood.nextElementSibling.querySelector(".mood-icon").textContent;
+        const moodValue = selectedMood.value;
+        
+        // Create new journal entry
+        const journalEntry = document.createElement("div");
+        journalEntry.className = "journal-entry";
+        
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        journalEntry.innerHTML = `
+          <div class="journal-entry-header">
+            <div class="journal-entry-date">Today, ${timeString}</div>
+            <div class="journal-entry-mood">${moodLabel} ${moodValue.charAt(0).toUpperCase() + moodValue.slice(1)}</div>
+          </div>
+          <div class="journal-entry-content">
+            ${journalText}
+          </div>
+        `;
+        
+        // Add new entry to the top of the journal
+        const journalEntries = document.querySelector(".skin-journal");
+        journalEntries.insertBefore(journalEntry, journalEntries.firstChild);
+        
+        // Reset form
+        journalTextarea.value = "";
+        selectedMood.checked = false;
+        
+        alert("Journal entry added successfully!");
+      });
+      
+      // Retake quiz button
+      const retakeQuizBtn = document.getElementById("retake-quiz-btn");
+      
+      if (retakeQuizBtn) {
+        retakeQuizBtn.addEventListener("click", () => {
+          window.location.href = "index.html#onboarding";
+        });
+      }
+      
+      // Logout button
+      const logoutBtn = document.getElementById("logout-btn");
+      const mobileLogoutBtn = document.getElementById("mobile-logout-btn");
+      
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          // In a real app, this would call an authentication service
+          alert("Logging out...");
+          window.location.href = "index.html";
+        });
+      }
+      
+      if (mobileLogoutBtn) {
+        mobileLogoutBtn.addEventListener("click", () => {
+          // In a real app, this would call an authentication service
+          alert("Logging out...");
+          window.location.href = "index.html";
+        });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -3,32 +3,614 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DearSkin - Recommended Ingredients</title>
+  <title>DearSkin - Ingredients Library</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="animation.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+  <!-- Navbar -->
   <header class="navbar">
     <div class="container">
       <div class="navbar-content">
-        <a href="index.html" class="logo">DearSkin</a>
+        <a href="/" class="logo">
+          <span class="logo-icon">✿</span>
+          <span class="logo-text">DearSkin</span>
+        </a>
+
+        <!-- Desktop Navigation -->
         <nav class="desktop-nav">
           <a href="index.html" class="nav-link">Home</a>
           <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="onboarding.html" class="nav-link">Onboarding</a>
           <a href="products.html" class="nav-link">Products</a>
           <a href="ingredients.html" class="nav-link active">Ingredients</a>
           <a href="widgets.html" class="nav-link">Widgets</a>
         </nav>
+
+        <!-- Auth Buttons - Desktop -->
+        <div class="auth-buttons">
+          <button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
+          <button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu">
+          <i data-lucide="menu"></i>
+        </button>
       </div>
     </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <nav class="mobile-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="products.html" class="nav-link">Products</a>
+        <a href="ingredients.html" class="nav-link active">Ingredients</a>
+        <a href="widgets.html" class="nav-link">Widgets</a>
+        <div class="mobile-auth-buttons">
+          <button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
+          <button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
+        </div>
+      </nav>
+    </div>
   </header>
+
+  <!-- Hero Section -->
+  <section class="hero" style="padding: var(--spacing-xl) 0;">
+    <div class="container">
+      <div class="hero-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+        <div class="badge">Ingredient Library</div>
+        <h1>Discover the <span class="highlight">power</span> of ingredients</h1>
+        <p>Learn about the active ingredients that can transform your skin and address your specific concerns.</p>
+      </div>
+    </div>
+    <div class="hero-blob-1"></div>
+    <div class="hero-blob-2"></div>
+  </section>
+
+  <!-- Search and Filter Section -->
+  <section style="background-color: var(--white); padding: var(--spacing-xl) 0;">
+    <div class="container">
+      <div class="card" style="padding: var(--spacing-lg);">
+        <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+          <div style="flex: 1; min-width: 250px;">
+            <label for="ingredient-search">Search Ingredients</label>
+            <div class="input-wrapper">
+              <i data-lucide="search" class="input-icon"></i>
+              <input type="text" id="ingredient-search" placeholder="Search by name...">
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 250px;">
+            <label for="concern-filter">Filter by Concern</label>
+            <div class="input-wrapper">
+              <i data-lucide="filter" class="input-icon"></i>
+              <select id="concern-filter">
+                <option value="">All Concerns</option>
+                <option value="acne">Acne</option>
+                <option value="aging">Anti-Aging</option>
+                <option value="dryness">Dryness</option>
+                <option value="pigmentation">Pigmentation</option>
+                <option value="sensitivity">Sensitivity</option>
+                <option value="oiliness">Oiliness</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="product-filters">
+          <button class="filter-btn active" data-category="all">All Ingredients</button>
+          <button class="filter-btn" data-category="hydrators">Hydrators</button>
+          <button class="filter-btn" data-category="antioxidants">Antioxidants</button>
+          <button class="filter-btn" data-category="exfoliants">Exfoliants</button>
+          <button class="filter-btn" data-category="brighteners">Brighteners</button>
+          <button class="filter-btn" data-category="soothers">Soothers</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Ingredient Recommendation Section -->
   <section class="ingredients">
     <div class="container">
-      <h2>Top Recommended Ingredients for You</h2>
-      <!-- Insert the ingredient cards here from original HTML -->
+      <div class="section-header">
+        <h2>Ingredient Library</h2>
+        <p class="section-description">Explore our comprehensive database of skincare ingredients</p>
+      </div>
+
+      <div class="ingredient-grid" id="ingredient-grid">
+        <!-- Ingredient cards will be dynamically populated here -->
+      </div>
     </div>
   </section>
-</body>
-</html>
+
+  <!-- Ingredient Detail Modal -->
+  <div id="ingredient-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 100; overflow-y: auto; padding: var(--spacing-xl);">
+    <div style="max-width: 800px; margin: 50px auto; background-color: var(--white); border-radius: var(--radius-lg); overflow: hidden; position: relative;">
+      <button id="close-modal" style="position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; z-index: 10;">
+        <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+      </button>
+      <div id="ingredient-detail-content" style="padding: var(--spacing-xl);"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <span class="logo-icon">✿</span>
+            <span class="logo-text">DearSkin</span>
+          </a>
+          <p>Personalized skincare recommendations powered by AI</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube">
+              <i data-lucide="youtube"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="ingredients.html">Ingredients</a></li>
+            <li><a href="widgets.html">Widgets</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Skin Encyclopedia</a></li>
+            <li><a href="#">Ingredient Guide</a></li>
+            <li><a href="#">Skincare Blog</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Skin Quiz</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 DearSkin. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Initialize Lucide icons
+      lucide.createIcons();
+
+      // Ingredient data
+      const ingredients = [
+        {
+          id: 1,
+          name: "Niacinamide",
+          shortName: "N",
+          category: "antioxidants",
+          description: "Reduces inflammation, minimizes pores, and regulates oil production",
+          benefits: ["Anti-inflammatory", "Pore-reducing", "Oil-control"],
+          concerns: ["acne", "oiliness", "pigmentation"],
+          details: `
+            <h3>Niacinamide (Vitamin B3)</h3>
+            <p>Niacinamide is a form of vitamin B3 that offers multiple benefits for the skin. It's water-soluble and works well with most other skincare ingredients.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Reduces inflammation and redness</li>
+              <li>Minimizes enlarged pores</li>
+              <li>Regulates sebum production</li>
+              <li>Improves uneven skin tone</li>
+              <li>Strengthens the skin barrier</li>
+              <li>Reduces fine lines and wrinkles</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>2-10% (5% is ideal for most skin types)</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially oily, acne-prone, and sensitive skin</p>
+            <h4>How to Use:</h4>
+            <p>Can be used morning and night. Works well in serums and moisturizers.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Hyaluronic Acid, Peptides, Most other active ingredients</p>
+            <h4>Avoid Combining With:</h4>
+            <p>No major conflicts, but some people prefer not to use it directly with Vitamin C</p>
+          `
+        },
+        {
+          id: 2,
+          name: "Hyaluronic Acid",
+          shortName: "HA",
+          category: "hydrators",
+          description: "Deeply hydrates and plumps skin by attracting and retaining moisture",
+          benefits: ["Hydrating", "Plumping", "Anti-aging"],
+          concerns: ["dryness", "aging", "sensitivity"],
+          details: `
+            <h3>Hyaluronic Acid</h3>
+            <p>Hyaluronic acid is a naturally occurring substance in the skin that can hold up to 1000 times its weight in water, making it an excellent hydrator.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Provides intense hydration</li>
+              <li>Plumps the skin and reduces the appearance of fine lines</li>
+              <li>Creates a dewy, glowing complexion</li>
+              <li>Helps other ingredients penetrate better</li>
+              <li>Soothes irritated skin</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>1-2% (Multiple molecular weights work best)</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially dehydrated and mature skin</p>
+            <h4>How to Use:</h4>
+            <p>Apply to damp skin for best results. Can be used morning and night.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Almost all other skincare ingredients</p>
+            <h4>Avoid Combining With:</h4>
+            <p>No known conflicts</p>
+          `
+        },
+        {
+          id: 3,
+          name: "Vitamin C",
+          shortName: "C",
+          category: "antioxidants",
+          description: "Brightens skin tone, reduces hyperpigmentation, and boosts collagen",
+          benefits: ["Brightening", "Anti-oxidant", "Collagen-boosting"],
+          concerns: ["pigmentation", "aging", "dullness"],
+          details: `
+            <h3>Vitamin C (L-Ascorbic Acid)</h3>
+            <p>Vitamin C is a powerful antioxidant that brightens skin, protects against environmental damage, and stimulates collagen production.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Brightens skin and fades dark spots</li>
+              <li>Protects against free radical damage</li>
+              <li>Boosts collagen production</li>
+              <li>Reduces inflammation</li>
+              <li>Enhances skin's repair process</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>10-20% (L-Ascorbic Acid form)</p>
+            <h4>Best For:</h4>
+            <p>Most skin types, but can be irritating for very sensitive skin</p>
+            <h4>How to Use:</h4>
+            <p>Best used in the morning under sunscreen. Store in dark, airtight containers.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Vitamin E, Ferulic Acid, Hyaluronic Acid</p>
+            <h4>Avoid Combining With:</h4>
+            <p>Retinol (in the same application), AHAs/BHAs (can cause irritation)</p>
+          `
+        },
+        {
+          id: 4,
+          name: "Retinol",
+          shortName: "R",
+          category: "exfoliants",
+          description: "Accelerates cell turnover, reduces fine lines, and improves texture",
+          benefits: ["Anti-aging", "Exfoliating", "Texture-improving"],
+          concerns: ["aging", "acne", "texture"],
+          details: `
+            <h3>Retinol (Vitamin A)</h3>
+            <p>Retinol is a derivative of vitamin A that promotes cell turnover, stimulates collagen, and helps unclog pores.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Reduces fine lines and wrinkles</li>
+              <li>Improves skin texture and tone</li>
+              <li>Helps clear acne and prevents breakouts</li>
+              <li>Fades hyperpigmentation</li>
+              <li>Stimulates collagen production</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>0.25-1% (Start low and gradually increase)</p>
+            <h4>Best For:</h4>
+            <p>Aging skin, acne-prone skin, sun-damaged skin</p>
+            <h4>How to Use:</h4>
+            <p>Use at night only. Start 1-2 times per week and gradually increase. Always use sunscreen during the day.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Hyaluronic Acid, Niacinamide, Peptides</p>
+            <h4>Avoid Combining With:</h4>
+            <p>Vitamin C, AHAs/BHAs, Benzoyl Peroxide (in the same application)</p>
+          `
+        },
+        {
+          id: 5,
+          name: "Peptides",
+          shortName: "P",
+          category: "antioxidants",
+          description: "Strengthens skin barrier and promotes collagen production",
+          benefits: ["Strengthening", "Firming", "Repairing"],
+          concerns: ["aging", "sensitivity"],
+          details: `
+            <h3>Peptides</h3>
+            <p>Peptides are short chains of amino acids that act as building blocks of proteins like collagen and elastin in the skin.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Stimulates collagen production</li>
+              <li>Improves skin firmness and elasticity</li>
+              <li>Strengthens the skin barrier</li>
+              <li>Reduces fine lines and wrinkles</li>
+              <li>Soothes and calms the skin</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>Varies by specific peptide complex</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially aging and damaged skin</p>
+            <h4>How to Use:</h4>
+            <p>Can be used morning and night. Best in serums and moisturizers.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Hyaluronic Acid, Niacinamide, Antioxidants</p>
+            <h4>Avoid Combining With:</h4>
+            <p>Strong acids (may deactivate peptides)</p>
+          `
+        },
+        {
+          id: 6,
+          name: "Ceramides",
+          shortName: "Ce",
+          category: "hydrators",
+          description: "Restores skin barrier function and locks in moisture",
+          benefits: ["Barrier-repair", "Moisturizing", "Protective"],
+          concerns: ["dryness", "sensitivity"],
+          details: `
+            <h3>Ceramides</h3>
+            <p>Ceramides are lipids (fats) that make up about 50% of the skin's barrier. They help retain moisture and protect against environmental stressors.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Strengthens the skin barrier</li>
+              <li>Retains moisture in the skin</li>
+              <li>Protects against environmental damage</li>
+              <li>Reduces sensitivity and irritation</li>
+              <li>Improves overall skin health</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>0.5-2%</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially dry, sensitive, and mature skin</p>
+            <h4>How to Use:</h4>
+            <p>Can be used morning and night. Found in moisturizers and barrier repair products.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Fatty acids, Cholesterol, Hyaluronic Acid</p>
+            <h4>Avoid Combining With:</h4>
+            <p>No known conflicts</p>
+          `
+        },
+        {
+          id: 7,
+          name: "Salicylic Acid",
+          shortName: "SA",
+          category: "exfoliants",
+          description: "Unclogs pores, reduces inflammation, and exfoliates skin",
+          benefits: ["Pore-clearing", "Anti-inflammatory", "Exfoliating"],
+          concerns: ["acne", "oiliness", "texture"],
+          details: `
+            <h3>Salicylic Acid (BHA)</h3>
+            <p>Salicylic acid is a beta-hydroxy acid (BHA) that is oil-soluble, allowing it to penetrate into pores to clear out excess sebum and dead skin cells.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Unclogs and minimizes pores</li>
+              <li>Reduces acne and prevents breakouts</li>
+              <li>Exfoliates the skin surface</li>
+              <li>Reduces inflammation and redness</li>
+              <li>Improves skin texture</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>0.5-2%</p>
+            <h4>Best For:</h4>
+            <p>Oily, acne-prone, and combination skin</p>
+            <h4>How to Use:</h4>
+            <p>Start with 2-3 times per week. Can be used in cleansers, toners, or treatments.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Niacinamide, Hyaluronic Acid, Green Tea</p>
+            <h4>Avoid Combining With:</h4>
+            <p>Retinol, other exfoliating acids (in the same application)</p>
+          `
+        },
+        {
+          id: 8,
+          name: "Glycolic Acid",
+          shortName: "GA",
+          category: "exfoliants",
+          description: "Exfoliates surface cells, brightens skin, and improves texture",
+          benefits: ["Exfoliating", "Brightening", "Texture-improving"],
+          concerns: ["dullness", "texture", "pigmentation"],
+          details: `
+            <h3>Glycolic Acid (AHA)</h3>
+            <p>Glycolic acid is an alpha-hydroxy acid (AHA) derived from sugar cane. It has the smallest molecular size of all AHAs, allowing for deeper penetration.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Removes dead skin cells</li>
+              <li>Brightens complexion</li>
+              <li>Improves skin texture and tone</li>
+              <li>Reduces fine lines and wrinkles</li>
+              <li>Helps fade hyperpigmentation</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>5-10% for daily use, 20-30% for professional peels</p>
+            <h4>Best For:</h4>
+            <p>Normal to oily skin, not recommended for very sensitive skin</p>
+            <h4>How to Use:</h4>
+            <p>Start with 1-2 times per week. Always use sunscreen during the day.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Hyaluronic Acid, Niacinamide, Peptides</p>
+            <h4>Avoid Combining With:</h4>
+            <p>Retinol, Vitamin C, other exfoliating acids (in the same application)</p>
+          `
+        },
+        {
+          id: 9,
+          name: "Azelaic Acid",
+          shortName: "AzA",
+          category: "brighteners",
+          description: "Reduces redness, fights acne, and fades dark spots",
+          benefits: ["Anti-inflammatory", "Brightening", "Antimicrobial"],
+          concerns: ["acne", "rosacea", "pigmentation"],
+          details: `
+            <h3>Azelaic Acid</h3>
+            <p>Azelaic acid is a naturally occurring acid found in grains like barley and wheat. It has multiple benefits for the skin.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Reduces inflammation and redness</li>
+              <li>Kills acne-causing bacteria</li>
+              <li>Fades post-inflammatory hyperpigmentation</li>
+              <li>Gentle exfoliation</li>
+              <li>Reduces rosacea symptoms</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>10-20%</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially those with acne, rosacea, or hyperpigmentation</p>
+            <h4>How to Use:</h4>
+            <p>Can be used morning and night. Apply to clean, dry skin.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Niacinamide, Hyaluronic Acid, Green Tea</p>
+            <h4>Avoid Combining With:</h4>
+            <p>Strong acids, high-strength retinoids (may cause irritation)</p>
+          `
+        },
+        {
+          id: 10,
+          name: "Centella Asiatica",
+          shortName: "CA",
+          category: "soothers",
+          description: "Calms inflammation, promotes healing, and strengthens skin barrier",
+          benefits: ["Soothing", "Healing", "Protective"],
+          concerns: ["sensitivity", "redness", "aging"],
+          details: `
+            <h3>Centella Asiatica (Cica)</h3>
+            <p>Centella Asiatica, also known as Cica or Tiger Grass, is a herb with potent healing and anti-inflammatory properties.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Calms irritated and sensitive skin</li>
+              <li>Promotes wound healing</li>
+              <li>Strengthens the skin barrier</li>
+              <li>Provides antioxidant protection</li>
+              <li>Stimulates collagen production</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>Varies by product formulation</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially sensitive, irritated, or damaged skin</p>
+            <h4>How to Use:</h4>
+            <p>Can be used morning and night. Found in serums, moisturizers, and masks.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Hyaluronic Acid, Niacinamide, Green Tea</p>
+            <h4>Avoid Combining With:</h4>
+            <p>No known conflicts</p>
+          `
+        },
+        {
+          id: 11,
+          name: "Alpha Arbutin",
+          shortName: "AA",
+          category: "brighteners",
+          description: "Fades dark spots and hyperpigmentation without irritation",
+          benefits: ["Brightening", "Even-toning", "Gentle"],
+          concerns: ["pigmentation", "sun damage", "acne scars"],
+          details: `
+            <h3>Alpha Arbutin</h3>
+            <p>Alpha Arbutin is a derivative of hydroquinone that inhibits melanin production, making it effective for fading dark spots and hyperpigmentation.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Fades dark spots and hyperpigmentation</li>
+              <li>Prevents new dark spots from forming</li>
+              <li>Evens out skin tone</li>
+              <li>Gentler than other brightening ingredients</li>
+              <li>Works on all skin tones</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>1-2%</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially those with hyperpigmentation</p>
+            <h4>How to Use:</h4>
+            <p>Use morning and night. Always use sunscreen during the day.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Vitamin C, Niacinamide, Hyaluronic Acid</p>
+            <h4>Avoid Combining With:</h4>
+            <p>Products with high pH (may degrade alpha arbutin)</p>
+          `
+        },
+        {
+          id: 12,
+          name: "Green Tea Extract",
+          shortName: "GT",
+          category: "antioxidants",
+          description: "Protects against environmental damage, soothes skin, and controls oil",
+          benefits: ["Antioxidant", "Soothing", "Oil-control"],
+          concerns: ["oiliness", "sensitivity", "aging"],
+          details: `
+            <h3>Green Tea Extract (EGCG)</h3>
+            <p>Green tea extract is rich in polyphenols, particularly EGCG (epigallocatechin gallate), which has powerful antioxidant and anti-inflammatory properties.</p>
+            <h4>Key Benefits:</h4>
+            <ul>
+              <li>Protects against environmental damage</li>
+              <li>Reduces inflammation and redness</li>
+              <li>Controls excess oil production</li>
+              <li>Soothes irritated skin</li>
+              <li>Has anti-aging properties</li>
+            </ul>
+            <h4>Recommended Concentration:</h4>
+            <p>Varies by product formulation</p>
+            <h4>Best For:</h4>
+            <p>All skin types, especially oily, acne-prone, and sensitive skin</p>
+            <h4>How to Use:</h4>
+            <p>Can be used morning and night. Found in toners, serums, and moisturizers.</p>
+            <h4>Pairs Well With:</h4>
+            <p>Niacinamide, Hyaluronic Acid, Vitamin C</p>
+            <h4>Avoid Combining With:</h4>
+            <p>No known conflicts</p>
+          `
+        }
+      ];
+
+
+        function createIngredientCard(ingredient) {
+      return `
+        <div class="ingredient-card" data-id="${ingredient.id}" data-category="${ingredient.category}" data-concerns="${ingredient.concerns.join(',')}">
+          <div class="ingredient-header">
+            <div class="ingredient-icon">${ingredient.shortName}</div>
+            <h3>${ingredient.name}</h3>
+          </div>
+          <div class="ingredient-content">
+            <p>${ingredient.description}</p>
+            <div class="ingredient-benefits">
+              ${ingredient.benefits.map(b => `<span class="benefit">${b}</span>`).join('')}
+            </div>
+            <button class="btn btn-outline btn-block view-ingredient" data-id="${ingredient.id}">
+              View Details <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render cards
+    const ingredientGrid = document.getElementById('ingredient-grid');
+    ingredientGrid.innerHTML = ingredients.map(createIngredientCard).join('');
+    lucide.createIcons();
+  });
+</script>

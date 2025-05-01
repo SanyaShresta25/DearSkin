@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DearSkin - Products</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="animation.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div class="navbar-content">
+        <a href="/" class="logo">
+          <span class="logo-icon">✿</span>
+          <span class="logo-text">DearSkin</span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="products.html" class="nav-link active">Products</a>
+          <a href="ingredients.html" class="nav-link">Ingredients</a>
+          <a href="widgets.html" class="nav-link">Widgets</a>
+        </nav>
+
+        <!-- Auth Buttons - Desktop -->
+        <div class="auth-buttons">
+          <button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
+          <button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <nav class="mobile-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="products.html" class="nav-link active">Products</a>
+        <a href="ingredients.html" class="nav-link">Ingredients</a>
+        <a href="widgets.html" class="nav-link">Widgets</a>
+        <div class="mobile-auth-buttons">
+          <button class="btn btn-ghost" onclick="window.location.href='auth.html?mode=login'">Login</button>
+          <button class="btn btn-primary" onclick="window.location.href='auth.html?mode=signup'">Sign Up</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Product Catalog Section -->
+  <section class="products">
+    <div class="container">
+      <div class="section-header">
+        <h2>Curated Products Based on Your Skin</h2>
+        <p class="section-description">Personalized recommendations that match your unique skin profile</p>
+      </div>
+
+      <div class="product-filters">
+        <button class="filter-btn active" data-filter="all">All Products</button>
+        <button class="filter-btn" data-filter="cleanser">Cleansers</button>
+        <button class="filter-btn" data-filter="serum">Serums</button>
+        <button class="filter-btn" data-filter="moisturizer">Moisturizers</button>
+        <button class="filter-btn" data-filter="treatment">Treatments</button>
+        <button class="filter-btn" data-filter="sunscreen">Sunscreens</button>
+      </div>
+
+      <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card" data-category="serum">
+          <div class="product-badge">Best Seller</div>
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="1">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="1">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Hydrating Serum</h3>
+              <span class="product-price">$38</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star-half" class="star-half"></i>
+              </div>
+              <span>4.8 (120 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Vegan</span>
+              <span class="tag">Cruelty-Free</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">98% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="1">Add to Routine</button>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card" data-category="cleanser">
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="2">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="2">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Gentle Cleanser</h3>
+              <span class="product-price">$24</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star-half" class="star-half"></i>
+              </div>
+              <span>4.6 (98 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Fragrance-Free</span>
+              <span class="tag">Sensitive Skin</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">95% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="2">Add to Routine</button>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card" data-category="moisturizer">
+          <div class="product-badge">New</div>
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="3">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="3">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Brightening Moisturizer</h3>
+              <span class="product-price">$45</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+              </div>
+              <span>4.9 (156 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Anti-Aging</span>
+              <span class="tag">Hydrating</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">99% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="3">Add to Routine</button>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card" data-category="treatment">
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="4">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="4">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Exfoliating Toner</h3>
+              <span class="product-price">$32</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star-half" class="star-half"></i>
+              </div>
+              <span>4.7 (84 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Alcohol-Free</span>
+              <span class="tag">Pore-Refining</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">92% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="4">Add to Routine</button>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card" data-category="treatment">
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="5">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="5">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Calming Face Mask</h3>
+              <span class="product-price">$28</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star-half" class="star-half"></i>
+              </div>
+              <span>4.5 (76 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Soothing</span>
+              <span class="tag">Redness-Relief</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">90% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="5">Add to Routine</button>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card" data-category="serum">
+          <div class="product-badge">Best Value</div>
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="6">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="6">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Vitamin C Serum</h3>
+              <span class="product-price">$52</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+              </div>
+              <span>4.9 (142 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Brightening</span>
+              <span class="tag">Anti-Oxidant</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">97% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="6">Add to Routine</button>
+          </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card" data-category="sunscreen">
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="7">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="7">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Daily SPF 50</h3>
+              <span class="product-price">$35</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+              </div>
+              <span>4.9 (203 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Broad Spectrum</span>
+              <span class="tag">Non-Greasy</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">96% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="7">Add to Routine</button>
+          </div>
+        </div>
+
+        <!-- Product 8 -->
+        <div class="product-card" data-category="moisturizer">
+          <div class="product-image">
+            <div class="product-placeholder">Product Image</div>
+            <div class="product-actions-overlay">
+              <button class="btn btn-round btn-white product-quick-view" data-product-id="8">
+                <i data-lucide="eye"></i>
+              </button>
+              <button class="btn btn-round btn-white product-save" data-product-id="8">
+                <i data-lucide="heart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="product-content">
+            <div class="product-brand">Brand Name</div>
+            <div class="product-header">
+              <h3>Night Repair Cream</h3>
+              <span class="product-price">$48</span>
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star" class="star-filled"></i>
+                <i data-lucide="star-half" class="star-half"></i>
+              </div>
+              <span>4.7 (118 reviews)</span>
+            </div>
+            <div class="product-tags">
+              <span class="tag">Repairing</span>
+              <span class="tag">Anti-Aging</span>
+            </div>
+            <div class="product-match">
+              <div class="match-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <span class="match-text">94% match for your skin</span>
+            </div>
+            <button class="btn btn-primary btn-block product-add-to-routine" data-product-id="8">Add to Routine</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Quick View Modal -->
+      <div id="product-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <div class="modal-body">
+            <div class="product-detail-grid">
+              <div class="product-detail-image">
+                <div class="product-placeholder">Product Image</div>
+              </div>
+              <div class="product-detail-info">
+                <div class="product-brand">Brand Name</div>
+                <h2 id="modal-product-title">Product Name</h2>
+                <div class="product-price" id="modal-product-price">$0.00</div>
+                <div class="product-rating">
+                  <div class="stars">
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star-half" class="star-half"></i>
+                  </div>
+                  <span id="modal-product-rating">4.8 (120 reviews)</span>
+                </div>
+                <div class="product-description">
+                  <p id="modal-product-description">Product description will appear here.</p>
+                </div>
+                <div class="product-ingredients">
+                  <h4>Key Ingredients:</h4>
+                  <ul id="modal-product-ingredients">
+                    <li>Ingredient 1</li>
+                    <li>Ingredient 2</li>
+                    <li>Ingredient 3</li>
+                  </ul>
+                </div>
+                <div class="product-tags" id="modal-product-tags">
+                  <span class="tag">Tag 1</span>
+                  <span class="tag">Tag 2</span>
+                </div>
+                <div class="product-match" id="modal-product-match">
+                  <div class="match-icon">
+                    <i data-lucide="check-circle"></i>
+                  </div>
+                  <span class="match-text">Match percentage</span>
+                </div>
+                <div class="product-actions">
+                  <button class="btn btn-primary btn-block" id="modal-add-to-routine">Add to Routine</button>
+                  <button class="btn btn-outline btn-block" id="modal-save-product">Save Product</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add to Routine Modal -->
+      <div id="routine-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <div class="modal-body">
+            <h3>Add to Your Routine</h3>
+            <p>Select when you want to use this product:</p>
+            <div class="routine-options">
+              <button class="btn btn-outline routine-option" data-routine="morning">
+                <i data-lucide="sun"></i>
+                Morning Routine
+              </button>
+              <button class="btn btn-outline routine-option" data-routine="evening">
+                <i data-lucide="moon"></i>
+                Evening Routine
+              </button>
+              <button class="btn btn-outline routine-option" data-routine="both">
+                <i data-lucide="calendar"></i>
+                Both Routines
+              </button>
+            </div>
+            <div class="routine-step-selection">
+              <h4>Select Step:</h4>
+              <select id="routine-step">
+                <option value="cleanser">Cleanser</option>
+                <option value="toner">Toner</option>
+                <option value="serum">Serum</option>
+                <option value="moisturizer">Moisturizer</option>
+                <option value="sunscreen">Sunscreen</option>
+                <option value="treatment">Treatment</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-block" id="confirm-add-to-routine">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="logo">
+            <span class="logo-icon">✿</span>
+            <span class="logo-text">DearSkin</span>
+          </a>
+          <p>Personalized skincare recommendations powered by AI</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i data-lucide="instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i data-lucide="facebook"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i data-lucide="twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube">
+              <i data-lucide="youtube"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="ingredients.html">Ingredients</a></li>
+            <li><a href="widgets.html">Widgets</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Skin Encyclopedia</a></li>
+            <li><a href="#">Ingredient Guide</a></li>
+            <li><a href="#">Skincare Blog</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Skin Quiz</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 DearSkin. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      lucide.createIcons();
+
+      document.getElementById("mobile-menu-button").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.toggle("active");
+      });
+
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const productCards = document.querySelectorAll('.product-card');
+      filterButtons.forEach(btn => btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+        productCards.forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+        });
+      }));
+
+      const products = {
+        1: {
+          title: "Hydrating Serum",
+          price: "$38",
+          rating: "4.8 (120 reviews)",
+          description: "A lightweight, hydrating serum that delivers intense moisture to the skin. Formulated with hyaluronic acid and vitamin B5.",
+          ingredients: ["Hyaluronic Acid", "Vitamin B5", "Glycerin", "Niacinamide"],
+          tags: ["Vegan", "Cruelty-Free"],
+          match: "98% match for your skin"
+        },
+        2: {
+          title: "Gentle Cleanser",
+          price: "$24",
+          rating: "4.6 (98 reviews)",
+          description: "A gentle, pH-balanced cleanser that removes impurities without stripping the skin.",
+          ingredients: ["Glycerin", "Aloe Vera", "Chamomile Extract", "Allantoin"],
+          tags: ["Fragrance-Free", "Sensitive Skin"],
+          match: "95% match for your skin"
+        }
+        // Add more products here
+      };
+
+      const modal = document.getElementById('product-modal');
+      const modalTitle = document.getElementById('modal-product-title');
+      const modalPrice = document.getElementById('modal-product-price');
+      const modalRating = document.getElementById('modal-product-rating');
+      const modalDesc = document.getElementById('modal-product-description');
+      const modalIngredients = document.getElementById('modal-product-ingredients');
+      const modalTags = document.getElementById('modal-product-tags');
+      const modalMatch = document.getElementById('modal-product-match').querySelector('.match-text');
+
+      document.querySelectorAll('.product-quick-view').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.productId;
+          const product = products[id];
+          modalTitle.textContent = product.title;
+          modalPrice.textContent = product.price;
+          modalRating.textContent = product.rating;
+          modalDesc.textContent = product.description;
+          modalIngredients.innerHTML = product.ingredients.map(i => `<li>${i}</li>`).join('');
+          modalTags.innerHTML = product.tags.map(t => `<span class="tag">${t}</span>`).join('');
+          modalMatch.textContent = product.match;
+          modal.style.display = 'block';
+        });
+      });
+
+      document.querySelectorAll('.close-modal').forEach(btn => btn.addEventListener('click', () => {
+        btn.closest('.modal').style.display = 'none';
+      }));
+    });
+  </script>
+</body>
+</html>
